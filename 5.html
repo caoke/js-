@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>异步和单线程</title>
+</head>
+<body>
+	<p>什么是异步？（合同步对比）</p>
+	<ul>
+		<li>有没有阻塞程序的进行</li>
+	</ul>
+	<p>前端使用异步的场景</p>
+	<ul>
+		<p>在可能发生等待的情况</p>
+		<p>等待过程中不能阻塞程序运行</p>
+		<p>定时任务：setTimeout, setInverval</p>
+		<p>网络请求: ajax请求，动态<img> 加载</p>
+		<p>时间绑定</p>
+	
+	</ul>
+	<p>异步和单线程</p>
+</body>
+<script type="text/javascript">
+	// 返回顺序 是 100 300 200
+	console.log(100);
+	setTimeout(function () {
+		console.log(200);
+	}, 1000);
+	console.log(300);
+
+</script>
+</html>
