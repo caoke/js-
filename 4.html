@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>作用域和作用域链</title>
+</head>
+<body>
+	<p>创建10个<a>便签 点击弹出对应的序列号</p>
+	<p>如何理解作用域<p>
+		<ul>
+			<li>无块级作用域</li>
+			<li>函数和全局作用域</li>
+			<li>自由变量：当前作用域没有定义的变量就是自由变量</li>
+			<li>闭包的两个场景：1、函数作为返回值 2、函数作为参数传递</li>
+		</ul>
+	<p>闭包</p>
+	    <li>1.定义：闭包是一个函数和函数所声明的词法环境的结合。</li>
+	    <li>2.应用场景：模块化、封装。</li>
+	    <li>3.优点：封装性强，使得变量始终保持在内存中。</li>
+	    <li>4.缺点：内存的消耗导致的性能问题。</li>
+	    <li>5.闭包创建：函数嵌套函数，使得内部函数返回出去，让外部来访问内部的变量。</li>
+
+</body>
+<script type="text/javascript">
+
+	//无块级作用域
+	if(true){
+		var name = 'lisi';
+	}
+	console.log(name); //lisi
+
+
+	//函数和全局作用域
+	var b = 100;
+	function f (){
+		var b = 200;
+		console.log('f', b);
+	}
+	f(); //函数作用域 f 200
+	console.log('global', b); //全局作用域 global 100
+
+
+	//作用域链 自由变量
+	var c = 1;
+	function f1 (){
+		var d = 2;
+		console.log(c); // c 就是自由变量  在函数中没有定义所以往父级作用域查找
+		console.log(d); // 
+	}
+
+	f1() // 1 2 函数的父级作用域就是定义的时候确定的 不是调用的时候确定的
+
+	//作用域链就是自由变量 不断的往父级作用域查找 直到查找定义 形成的一个链式结构
+	var e = 1;
+	function f2 (){
+		var f = 2;
+		function f3 () {
+			var g = 3;
+			console.log(e); //e 是f2 f3的自由变量 f2的父级作用域是全局
+			console.log(f);  // f 是f3的自由变量 f3的父级作用域是f2
+			console.log(g);
+		}
+		f3();
+	}
+	f2();
+
+
+	//闭包 函数作为返回值
+	function bibao() {
+		var a = 100;
+		return function() {
+			console.log(a);
+		}
+	}
+	var f4 = bibao();
+	 
+	var  a = 200;
+	f4();  // 100  函数的父级作用域就是定义的时候确定的 不是执行的时候确定的
+
+	//闭包  函数作为参数传递
+
+	function bibao1() {
+		var a = 100;
+		return function() {
+			console.log(a);
+		}
+	}
+	var f5 = bibao1();
+
+	function f6 (fn) {
+		var a = 200;
+		fn();
+	}
+	f6(f5);
+
+
+
+	//创建10个<a>便签 点击弹出对应的序列号 闭包的使用
+	for (var i = 9; i >= 0; i--) {
+		(function(i){
+			var a = document.createElement('a'); //a是自由变量
+			a.innerHTML = i + '<br>';
+			a.addEventListener('click',function () {
+				console.log(i);
+			});
+			document.body.appendChild(a);
+		})(i);
+	}
+
+
+	//闭包的实际应用 主要用于封装变量 收敛权限 防止修改_list
+
+	function _isFirstLoad (val) {
+		var _list = [];
+		if (_list.indexOf(val) > -1) {
+			return false;
+		}else {
+			_list.push(val);
+			return true;
+		}
+	}
+	_isFirstLoad(10); //true
+	_isFirstLoad(10); //false 
+
+
+</script>
+</html>
