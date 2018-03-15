@@ -96,7 +96,7 @@
 
 	//创建10个<a>便签 点击弹出对应的序列号 闭包的使用
 	for (var i = 9; i >= 0; i--) {
-		(function(i){
+		(function(i){ //这里的i 是在函数作用域中 
 			var a = document.createElement('a'); //a是自由变量
 			a.innerHTML = i + '<br>';
 			a.addEventListener('click',function () {
@@ -109,18 +109,37 @@
 
 	//闭包的实际应用 主要用于封装变量 收敛权限 防止修改_list
 
-	function _isFirstLoad (val) {
+	function _isFirstLoad1 () {
 		var _list = [];
+		return function(val) {
+			if (_list.indexOf(val) > -1) {
+				console.log(false);
+			}else {
+				_list.push(val);
+				console.log(true);
+			}
+		}
+		
+	}
+	var isFirstLoad = _isFirstLoad1(); //true
+	isFirstLoad(10)   // true
+	isFirstLoad(10); //false 
+
+	//不是闭包的情况 对比 没有作为函数返回
+	function _isFirstLoad2 (val) {
+		var _list = [];
+	
 		if (_list.indexOf(val) > -1) {
-			return false;
+			console.log(false);
 		}else {
 			_list.push(val);
-			return true;
+			console.log(true);
 		}
+		
+		
 	}
-	_isFirstLoad(10); //true
-	_isFirstLoad(10); //false 
-
+	_isFirstLoad2(10)   // true
+	_isFirstLoad2(10); //true 
 
 </script>
 </html>
