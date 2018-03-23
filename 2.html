@@ -5,5 +5,14 @@
 </head>
 <body>
 	<p>js内置的够着函数</p>
+	<script type="text/javascript">
+		function Person(name){
+			this.name = name;
+		}
+		var will = new Person();
+		console.log(will.__proto__);
+		console.log(Person.prototype);
+		console.log(Object.prototype);
+	</script>
 </body>
 </html>

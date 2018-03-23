@@ -6,12 +6,16 @@
 <body>
 	<div>
 		<p>原型和原型链-5个原型规则</p>
-		<div>
+		<div style="display: inline-block;width: 100px">
 		    1、所有的引用类型（对象/数组/函数），都具有对象的属性，即可自由拓展属性（null除外） 
 			2、所有的引用类型（对象/数组/函数），都有一个__proto__(隐形原型)属性，这个隐形原型其实就是一个普通的对象 3、所有的函数都有一个prototype（显示原型）属性，也是一个普通对象 
 			4、所有的引用类型（对象/数组/函数）的_proto_都指向它的构造函数的prototype属性 
 			5、当查找一个对象的某个属性，如果对象没有这个属性，就去__proto__(也就是他的构造函数的prototype属性)中寻找
 		</div>
+		<div style="display: inline-block;width: 200px;background-color: red;">
+		hhh
+		</div>
+
 	</div>
 	<script type="text/javascript">
 		var arr = []; arr.a = 1;
@@ -52,6 +56,74 @@
 		f1.printName();
 		f.toString();  //要去f.__proto__ 也就是Foo.prototype中去找这个属性，但这里并没有 所以去f.__proto__.__proto__ 也就是Object.prototype中去找
 
+
+		function new2(func){
+			let o = Object.create(func.prototype);
+			let k = func.call(o);
+			return typeof k === 'object' ? k : o;
+		}
+
+		function M() {
+			this.name = 'zhangsan'
+		}
+
+		let m = new2(M)
+		console.log(m instanceof M); // true
+		console.log(m instanceof Object);  //true
+		console.log(m.__proto__);   // 
+		console.log(M.prototype);   //
+		console.log(m.__proto__ === M.prototype);   // true
+		console.log(m.__proto__.constructor === M);  // true
+
+		var num = 10;
+		var foo = {
+			num: 20,
+			bar: function() {
+				console.log(this.num);
+			}
+		}
+		foo.bar();
+		var bar = foo.bar();
+
+
+		// 定义一个动物类
+		function Animal (name) {
+		  // 属性
+		  this.name = name || 'Animal';
+		  // 实例方法
+		  this.sleep = function(){
+		    console.log(this.name + '正在睡觉！');
+		  }
+		}
+		// 原型方法
+		Animal.prototype.eat = function(food) {
+		  console.log(this.name + '正在吃：' + food);
+		};
+		//原型链继承
+		function Cat(){}
+		Cat.prototype = new Animal();
+		Cat.prototype.name = 'cat';
+
+		//　Test Code
+		var cat = new Cat();
+		cat.name = 'sh';
+		cat.printNmae = function(){
+			console.log(this.name);
+		}
+		console.log(cat.name);
+		console.log(cat.eat('fish'));
+		console.log(cat.sleep());
+		console.log(cat.printNmae());
+		console.log(cat instanceof Animal); //true 
+		console.log(cat instanceof Cat); //true
+
+
+
+		function Person(name){
+			this.name = name;
+		}
+		var will = New Person();
+		console.log(will.__proto__);
 
 
 
