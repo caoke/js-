@@ -7,6 +7,8 @@
 	<p>什么是异步？（合同步对比）</p>
 	<ul>
 		<li>有没有阻塞程序的进行</li>
+		<li>同步会阻塞代码，异步不会</li>
+		<li>alert是同步，setTimeout是异步</li>
 	</ul>
 	<p>前端使用异步的场景</p>
 	<ul>
@@ -30,6 +32,64 @@
 		console.log(4)
 	},0)
 	console.log(5);
+
+	function f1() {
+		var n = 99;
+		function f2(){
+			console.log(n);
+		}
+		return f2;
+	}
+	var result = f1();
+	result();
+
+	var name = 'window';
+	var p = {
+		name: 'p',
+		getName: function () {
+			return function(){
+				return this.name;
+			}
+		}
+	};
+	var getName = p.getName();
+	var _name = getName();
+	console.log(_name);  //window
+
+	function test() {
+		console.log(foo);
+		console.log(bar);
+		var foo = '1';
+		console.log(foo);
+		var bar = function () {
+			return '2';
+		}
+		function foo() {
+			return '3';
+		}
+	}
+	test();  //f foo(){return '3'}  undefined 1 function 的优先级高于var 故foo是函数 bar 是 undefined
+
+	function test2() {
+		console.log(foo);
+		console.log(bar);
+		var foo = '1';
+		console.log(foo);
+		var bar = function () {
+			return '2';
+		}
+		var foo = function foo() {
+			return '3';
+		}
+	}
+	test2()  //undefined undefined  1
+
+	function a() {
+		console.log('aaa');
+	}
+	var b = 'bbb'
+	a(b);
+
 
 
 </script>

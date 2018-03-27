@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>事件</title>
+    </head>
+    <body>
+        <div id=“div” class="">
+            <p id="p1">1</p>
+            <p id="p2">2</p>
+        </div>
+
+    </body>
+    <script type="text/javascript">
+    //编写一个通用的事件监听函数
+     function bindEvent(elem,type, fn){
+         elem.addEventListener(type,fn);
+     }
+
+     var a = document.getElementById('a');
+     bindEvent(a,'click',function (e) {
+         e.preventDefault();//阻止默认行为 对于a来说就是不跳转链接
+         alert('click');
+     })
+
+
+
+    //描述事件冒泡流程
+    var body = document.body
+    bindEvent(p1,'click',function (e) {
+        e.stopPropatation();//阻止冒泡行为 如果不写的话 会弹出1 然后弹出body
+        alert('1');
+    })
+    bindEvent(body,'click',function(e){
+        alter('body')
+    })
+
+
+
+
+    //对于一个无限下拉的加载图片的页面，如何给每个图片绑定事件 代理
+    var div = document.getElementById('div')
+    bindEvent(div,'click',function (e) {
+        let target = e.target // 点击的目标元素 //代理
+    })
+
+
+    //IE低版本的兼容
+
+    </script>
+</html>

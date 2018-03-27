@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ajax</title>
+    </head>
+    <body>
+
+    </body>
+
+    <script type="text/javascript">
+        //手写一个ajx请求
+        //XMLHttpRequest
+        var xhr = new XMLHttpRequest(); // new
+        xhr.open('GET', '/api', false)
+        xhr.onreadystatechange = function () {
+            //这里的函数是异步执行 resdystate的变化会 触发onreadysatechange函数的
+            if(xhr.readyState == 4){// 4 表示是不是完成
+
+                if(xhr.status == 200){//200 表示请求成功
+                    console.log(xhr.responseText);
+                }
+            }
+        }
+        xhr.send(null)
+
+
+    </script>
+</html>
