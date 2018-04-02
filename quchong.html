@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>数组去重</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            //原地的 有序数组 去重
+            function delRepeat(arr) {
+                let n = 0;
+                for(let i=0; i<arr.length; i++){
+                    if(arr[i] == arr[i+1]) {
+                        n++;
+                    }else {
+                        i = i-n;
+                        arr.splice(i,n);
+                        n = 0;
+                    }
+                }
+                return arr;
+            }
+            let arr1 = [1,1,1,2,2,2,2,2,2,3,3,3,3,4,4,4];
+            console.log(delRepeat(arr1));//[1,2,3,4]
+
+            //扁平化数组
+            let arr2 = [1,[2,3],[3,4,5]];
+            function bianping(arr,ret = []) {
+                for(let i = 0;i<arr.length;i++){
+                    if(arr[i] instanceof Array){
+                        bianping(arr[i],ret);
+                    }else {
+                        ret.push(arr[i]);
+                    }
+                }
+                return ret;
+            }
+            console.log(bianping(arr2)); //[1,2,3,3,4,5]
+
+            //返回的是一个函数的表达式
+            //console.log(mul(2)(3)(4));//24
+            function mul(num) {
+                let  ret = 1;
+                var fn = function (num) {
+                    ret = ret*num;
+                    return fn;
+
+                }
+                fn.toString = function () {
+                    return ret;
+                };
+                return fn;
+            }
+            console.log(mul(2)(3));
+
+            var add = function(x){
+                var sum = 1;
+                var tmp = function(x){
+                    sum = sum + x;
+            	    return tmp;
+                }
+                tmp.toString = function(){
+                    return sum;
+                }
+                return tmp;
+            }
+            console.log(add(1)(2)(3)(4));
+            // alert(add(1)(2)(3)) --> 6
+        </script>
+    </body>
+</html>
