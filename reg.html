@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>正则表达式集合</title>
+    </head>
+    <body>
+        <dl class="">
+            数字串千分位
+        </dl>
+        <dd>1、先将数字转换位字符串 </dd>
+        <dd>2、判断一个数字和“.”之间的数字个数是3的倍数,即有1个或者n个3位数的表达式</dd>
+        <dd>3、先行断言： x(?=y)，找到x后面紧跟着y的位置，如果找到则匹配x的位置</dd>
+        <dl class="">
+            replace的用法
+        </dl>
+        <dl class="">
+            查找重复项最多的字符个数
+        </dl>
+        <dd>1、()\1 表示重复前面的表达式</dd>
+        <dd>
+            \a 表示重复的某个子项 比如：
+
+            \1 重复的第一个子项
+
+            \2 重复的第二个子项
+        </dd>
+        <script type="text/javascript">
+        function commafy(num){
+            return num && num
+                .toString()
+                .replace(/(\d)(?=(\d{3})+\.)/g, function($0,$1){
+                    //$1
+                    return $1 + ',';
+                });
+        }
+        console.log(commafy(1234567.002));
+        //replace的用法
+        var name = "Doe, John";
+        console.log(name.replace(/(\w+)\s*, \s*(\w+)/, '$2 $1'));
+
+        //查找重复项最多的个数 //查找连续的重复的元素的个数
+        function repeatNum(str) {
+            var arr = str.split(''); //把字符串转换为数组
+            str = arr.sort().join(''); //首先进行排序，这样结果会把相同的字符放在一起，然后再转换为字符串
+            //alert(str);  // aaddjjkklsssssssssssssssss
+
+            var value = '';
+            var index = 0;
+            var re = /(\w)\1+/g;  //匹配字符，且重复这个字符，重复次数至少一次。
+            str.replace(re,function($0,$1){
+                //$0;   代表每次匹配成功的结果 : aa dd jj kk l sssssssssssssssss
+                //$1;  代表每次匹配成功的第一个子项，也就是\w:  a d j k l S
+                if(index<$0.length){  //如果index保存的值小于$0的长度就进行下面的操作
+                      index = $0.length;  // 这样index一直保存的就在最大的长度
+                       value = $1;  //value保存的是出现最多的这个字符
+                }
+
+            });
+            return '最多的字符:'+value+',重复的次数:'+index;
+        }
+        var str = 'assssjdssskssalsssdkjsssdssc';
+        console.log(repeatNum(str)); // s   17
+
+        //引申 原地的有序数组去重,即发现重复
+        function delRepeatOrderedArr(arr) {
+            let reg = /(\d)\1*/g; //匹配字符，且重复这个字符，重复次数0次或者多次。
+            let ret = [];
+            arr.join('').replace(reg,function ($0,$1) {
+                ret.push($1);
+            });
+            return ret;
+        }
+        let arr = [1,1,1,2,2,2,3,3,4,6,6,6,6,6,6];
+        console.log(delRepeatOrderedArr(arr));
+
+
+        </script>
+    </body>
+</html>
