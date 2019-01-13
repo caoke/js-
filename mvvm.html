@@ -4,25 +4,28 @@
         <title>vue双向数据绑定极简实现</title>
     </head>
     <body>
-        请输入<input type="text" id="txt" />
+        请输入<input type="text" id="txt"/>
         <p>Message is:<span id="sp"></span></p>
     </body>
     <script>
         var txt = document.getElementById('txt'),
             sp = document.getElementById('sp'),
+            msgValue = '',
             obj = {}
+            
 
         // 给对象obj添加msg属性，并设置setter访问器
         Object.defineProperty(obj, 'msg', {
             // 设置 obj.msg  当obj.msg反生改变时set方法将会被调用  
-            set: function (newVal) {
+            set: function (newVal,oldVal) {
                 // 当obj.msg被赋值时 同时设置给 input/span
-                txt.value = newVal
-                sp.innerText = newVal
+                txt.value = obj.msg
+                sp.innerText = obj.msg
+                
+                msgValue = newVal
             },
-            get: function (newVal, oldVal) {
-                // console.log(oldVal)
-                return newVal
+            get: function () {
+                return msgValue
             }
         })
 
