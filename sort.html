@@ -22,8 +22,15 @@
                 <li>根据instanceof属性判断当前元素是不是数组</li>
                 <li>如果是数组递归当前方法</li>
             </ul>
+            <dl>
+                二分查找
+            </dl>
+            <ul>
+                <li></li>
+            </ul>
         </div>
         <script type="text/javascript">
+            // 快速排序
             function quickSort(arr) {
                 if (arr.length <= 1) {
                     return arr;
@@ -48,21 +55,47 @@
 
             let arr = [1,98,45,63,53,23,3,67,55,99];
             console.log(quickSort(arr));
+            console.log([...new Set(arr)])
 
 
-            //扁平化数组
-            let arr2 = [1,[2,3],[3,4,5]];
-            function bianping(arr,ret = []) {
+            //扁平化数组 方法一
+            let arr2 = [1,[2,3],[3,[4,5]]];
+            function bianping1(arr,ret = []) {
                 for(let i = 0;i<arr.length;i++){
                     if(arr[i] instanceof Array){
-                        bianping(arr[i],ret);
+                        bianping1(arr[i],ret);
                     }else {
                         ret.push(arr[i]);
                     }
                 }
                 return ret;
             }
-            console.log(bianping(arr2)); //[1,2,3,3,4,5]
+            console.log(bianping1(arr2)); //[1,2,3,3,4,5]
+            // reduce
+            function bianping2(arr) {
+                return arr.reduce((result, item)=> {
+                    return result.concat(Array.isArray(item) ? bianping2(item) : item);
+                }, []);
+            }
+            console.log(bianping2(arr2));
+
+            // ... 扩展运算符
+            function bianping3(arr) {
+                // while遍历直到arr中没有数组 some存在符合条件的则为true
+                while(arr.some(item=>Array.isArray(item))) {
+                    arr = [].concat(...arr);
+                }
+                return arr;
+            }
+            console.log(bianping3(arr2));
+
+            //  join & split
+            function bianping4(arr) {
+                return arr.join(',').split(',').map(item => {
+                    return parseInt(item)
+                })
+            }
+            console.log(bianping4(arr2))
 
 
         </script>
