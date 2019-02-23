@@ -45,23 +45,25 @@
             let arr = [1,1,1,2,2,2,3,3,4,6,6,6,6,6,6];
             console.log(delRepeatOrderedArr(arr));
 
-            //查找连续的重复的元素的个数
+
 
             //返回的是一个函数的表达式
             //console.log(mul(2)(3)(4));//24
             function mul(num) {
                 let ret = 1;
                 const fn = function (num) {
-                    ret =ret * num;
+                    ret = ret*num;
+                    console.log(ret);
                     return fn;
                 }
                 fn.toString = function () {
-                    return ret;
+                    console.log(ret);
+                    return ret*num;
                 }
                 return fn;
             }
-            console.log(mul(1)(2)(3)(4)); // 24
-            console.log(mul(2)(3)(4));//12
+            //console.log(mul(2)(3)); // 24
+            //console.log(mul(2)(3)(4));// log是mul这个函数的toString 方法 所以最后的num是第一个参数
 
 
             var add = function(x){
@@ -71,7 +73,7 @@
             	    return tmp;
                 }
                 tmp.toString = function(){
-                    return sum;
+                    return sum+x;
                 }
                 return tmp;
             }

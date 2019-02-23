@@ -30,6 +30,15 @@
         getName();//1
         new Foo().getName(); // 2
         new new Foo().getName(); // 2
+        var arr = [1,2,3]
+        var data = {};
+        for (var i in arr) {
+            Object.assign(data,{
+                ["key_"+i]: 1
+            });
+        }
+
+        console.log(data);
 
     </script>
 </html>
