@@ -5,10 +5,11 @@
         <title>事件</title>
     </head>
     <body>
-        <div id=“div” class="">
+        <div id="div1" class="">
             <p id="p1">1</p>
             <p id="p2">2</p>
         </div>
+        <a href="#" id="a">aaaaa</a>
 
     </body>
     <script type="text/javascript">
@@ -26,22 +27,22 @@
 
 
     //描述事件冒泡流程
-    var body = document.body
+    var body = document.body;
+    var p1 = document.getElementById('p1');
     bindEvent(p1,'click',function (e) {
-        e.stopPropatation();//阻止冒泡行为 如果不写的话 会弹出1 然后弹出body
+        e.stopPropagation();//阻止冒泡行为 如果不写的话 会弹出1 然后弹出body
         alert('1');
     })
     bindEvent(body,'click',function(e){
-        alter('body')
-    })
-
-
+        alert('body')
+    });
 
 
     //对于一个无限下拉的加载图片的页面，如何给每个图片绑定事件 代理
-    var div = document.getElementById('div')
+    var div = document.getElementById('div1');
     bindEvent(div,'click',function (e) {
         let target = e.target // 点击的目标元素 //代理
+        console.log(target);
     })
 
 
