@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>题目合集</title>
+  </head>
+  <body>
+
+  </body>
+  <script>
+    // 闭包
+    /**
+     * @description  下面代码输出什么 10个10
+     */
+    for(var i = 0; i < 10; i++) {
+      setTimeout(() => {
+          console.log(i) 
+      }, 0)
+    }
+
+    for(var i = 0; i<10; i++) {
+      (function (i) {
+        setTimeout(() => {
+          console.log('闭包' + i) 
+        }, 0)
+      })(i);
+    }
+
+    for(let i = 0; i < 10; i++) {
+      setTimeout(() => {
+        console.log('let' + i)
+      },0)
+    }
+
+    // 实例的__proto__属性（原型）等于其构造函数的prototype属性
+    function Person(name) {
+        this.name = name
+    }
+    let p = new Person('Tom');
+
+    console.log(p.__proto__ === Person.prototype) // true
+    console.log(Person.__proto__ === Function.prototype) // true
+
+    /**
+     * @description instanceof内部实现逻辑  x instanceof y 
+     * 
+     */
+     function sameInstanceof(x,y){
+      while(x.__proto__!==null) {
+        if(x.__proto__=== y.prototype) {
+            return true;
+        }
+        x.__proto__ = x.__proto__.proto__;
+      }
+      if(x.__proto__==null) {return false;}
+     }
+     
+
+  </script>
+</html>
