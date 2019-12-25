@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>水平垂直居中</title>
+  <style>
+    .box{
+      background-color: aqua;
+      width: 300px;
+      height: 300px;
+      margin: 20px;
+    }
+    .content{
+      background-color: red;
+      width: 100px;
+      height: 100px;
+      
+    }
+    .box1{
+     
+    }
+    .center1{
+      display: inline-block;
+      margin: 0 auto;
+      text-align: center;
+      
+    }
+    .box2{
+      position: relative;
+    }
+    .center2{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -50px 0  0 -50px;
+    }
+    .center3{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .box4{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <p>方案一：1、块级元素 需要设置宽度，配合margin: 0 auto;2、内联元素 使用 text-align: center;</p>
+  <div class="box box1">
+    <div class="content center1">11111111</div>
+  </div>
+  <p>方案二：父元素设置为：position: relative;子元素设置为：position: absolute; 距上50%，据左50%，然后减去元素自身宽度的距离就可以实现</p>
+  <div class="box box2">
+    <div class="content center2"></div>
+  </div>
+  <p>方案三：position transform 元素未知宽度,如果元素未知宽度，只需将上面例子中的margin: -50px 0 0 -50px;替换为：transform: translate(-50%,-50%);</p>
+  <div class="box box2">
+    <div class="content center3"></div>
+  </div>
+  <p>方案四： flex布局</p>
+  <div class="box box4">
+    <div class="content center4"></div>
+  </div>
+</body>
+</html>
