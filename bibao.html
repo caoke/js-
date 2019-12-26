@@ -71,7 +71,13 @@
 
         var a = {n: 1}
         var b = a
-        a.x = a = {n: 2}
+        a.x = null
+        a.x = {n:2}
+        a = {n: 2}
+       
+   
+        // a.x = a = {n: 2}
+        
         console.log('a.x', a.x)
         console.log('a', a)
         console.log('b.x', b.x)

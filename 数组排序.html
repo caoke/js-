@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>数组排序和随机数</title>
+</head>
+<body>
+    <p>倒排: reverse </p>
+    <p>升序: sort </p>
+    <p>降序：sort().reverse()</p>
+    <p>返回 0 ~ 1 之间的随机数，包含 0 不包含 1：random() </p>
+</body>
+<script>
+    var arr = [3,6,2,4,1,5]
+    //随机排序
+    const radArr = (arr) => {
+      let option = JSON.parse(JSON.stringify(arr))
+      let newArr = []
+      for(let i = 0; i< option.length; i++) {
+        let rad = Math.floor(Math.random()*option.length)
+        newArr.push(option[rad])
+        option.splice(rad, 1)
+      }
+      return [...new Set([...option, ...newArr])]
+    }
+
+    // 生成生成 [1,max] 的随机数
+    const rad1ToMax = (max) => {
+      return Math.floor(Math.random()*max)+1;
+    }
+    // 生成[0,max]的随机数
+    const rad0ToMax = (max) => {
+      return Math.floor(Math.random()*(max+1));
+    }
+    // 生成 [min,max] 的随机数
+    const radMinToMax = (min, max) => {
+      return Math.floor(Math.random()*(max-min+1)+min);
+    }
+
+    console.log(rad0ToMax(10))
+    console.log(radMinToMax(1,10))
+
+
+
+
+</script>
+</html>

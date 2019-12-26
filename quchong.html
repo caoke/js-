@@ -30,7 +30,7 @@
                 }
                 return arr;
             }
-            let arr1 = [1,1,1,2,2,2,2,2,2,3,3,3,3,4,4,4];
+            let arr1 = [1,1,1,2,2,2,3,2,2,2,3,3,3,3,4,4,4];
             console.log(delRepeat(arr1));//[1,2,3,4]
 
             //方法二
@@ -43,9 +43,15 @@
                 return ret;
             }
             let arr = [1,1,1,2,2,2,3,3,4,6,6,6,6,6,6];
-            console.log(delRepeatOrderedArr(arr));
+            console.log('reg',delRepeatOrderedArr(arr));
 
-            console.log([...new Set(arr)]) //1,2,3,4,6 
+
+            // 方法三 借助Es6 的set结构
+            console.log('set',[...new Set(arr)]) //1,2,3,4,6 
+
+            // 方法四 filter函数 如果获取的位置与当前位置不同 说明存在另外一个相同的元素，则过滤掉它
+            arr.filter((ele, pos, self) => self.indexOf(ele) === pos)
+            console.log('filter', arr.filter((ele, pos, self) => self.indexOf(ele) === pos))
 
             //查找连续的重复的元素的个数
 
