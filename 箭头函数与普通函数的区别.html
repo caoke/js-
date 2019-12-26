@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <title>es6用法</title>
+    <body>
+      <ul>
+        <li>箭头函数语法上更简洁 ,箭头函数代码只有一行的时候，默认返回</li>
+        <li>箭头函数中没有this，this指向依赖所属上下文，使用call/apply/bind都无法改变指向</li>
+        <li>箭头函数没有arguments,只能基于...args</li>
+        <li>箭头函数不能创建构造函数，不能被new执行，没有prototype</li>
+      </ul>
+    </body>
+    <script type="text/javascript">
+      let fn = (...arg) => {
+        console.log(arg)
+      }
+      fn(10,20,30)
+    </script>
+</html>

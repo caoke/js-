@@ -53,9 +53,9 @@
 
             }
 
-            let arr = [1,98,45,63,53,23,3,67,55,99];
+            let arr = [1,98,45,63,53,34,23,3,67,55,99];
             console.log(quickSort(arr));
-            console.log([...new Set(arr)])
+            console.log([...new Set([1,98,45,63,53,34,23,3,67,55,99])])
 
 
             //扁平化数组 方法一
@@ -99,6 +99,21 @@
 
             // es6 flat
             console.log(arr2.flat(Infinity))
+
+            // 冒泡排序
+            function bubleSort(arr) {
+                var len = arr.length;
+                for (let outer = len ; outer >= 2; outer--) {
+                    for(let inner = 0; inner <=outer - 1; inner++) {
+                        if(arr[inner] > arr[inner + 1]) {
+                            [arr[inner],arr[inner+1]] = [arr[inner+1],arr[inner]]
+                        }
+                    }
+                }
+                return arr;
+            }
+            console.log(bubleSort(arr))
+
 
         </script>
     </body>

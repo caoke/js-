@@ -12,15 +12,15 @@
         var A = function () {};
         A.prototype.n = 1;
         var b = new A();
-        A.prototype = {
-            n: 2,
-            m: 3
-        }
+        // A.prototype = {
+        //     n: 2,
+        //     m: 3
+        // }
         
         var c = new A();
         console.log(b.n); // 1
         console.log(b.m) // undefined
-        console.log(b.__proto__ ) // {n: 1, constructor: f}
+        console.log(b.__proto__  , b.prototype) // {n: 1, constructor: f}
         console.log(A.prototype)
         console.log(Function.prototype)
 
@@ -43,8 +43,8 @@
         var f = new F();
 
         f.a();
-        // f.b();
-        //console.log(f.__proto__ === F.prototype)
+        f.b();
+        console.log(f.__proto__ === F.prototype)
         console.log(F.prototype)
         console.log(F.__proto__)
 

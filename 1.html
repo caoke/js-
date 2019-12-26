@@ -91,6 +91,28 @@ console.log(adder.addThruCall2(1)); // 输出 3
 // var Add = (i=0)=> ()=> (++i);
 
 
+var obj = {
+    birth: 1990,
+    getAge: function () {
+        var b = this.birth; // 1990
+        var fn = function() {new Date().getFullYear() - this.birth; }// this指向obj对象
+        return fn();
+    }
+};
+console.log(obj.getAge()); 
+
+
+const a = {};
+const b = { key : "b"};
+const c = { key : "c" };
+a[b] = 123;
+a[c] = 456;
+console.log(a[b]);
+
+const numbers = [1,2,3];
+numbers[10] = 11; 
+console.log(numbers);
+
 
 </script>
 </body>

@@ -1,0 +1,126 @@
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<style>
+		#cas{
+			display: block;
+			border:1px solid;
+			margin:auto;
+		}
+	</style>
+	<script>
+   
+		window.onload = function(){
+      const img = new Image() 
+      img.src = './jizhan.png'
+
+			canvas = document.getElementById('cas');
+			context = canvas.getContext('2d');
+
+			var polygons = [];
+			var polygon;
+			canvas.onmousedown = function(event){
+				event = event || window.event;
+				canCreate = true;
+
+				var mouse ={
+					x: event.clientX + document.documentElement.scrollLeft + document.body.scrollLeft - canvas.offsetLeft - 14,
+          y: event.clientY + document.documentElement.scrollTop + document.body.scrollTop - canvas.offsetTop - 28
+				}
+				polygons.forEach(function(){
+          if((mouse.x>= this.x-14 && mouse.x<= this.x+14) &&(mouse.y >= this.y-28 && mouse.y <= this.y)){
+            canCreate = false;
+						polygon = this;
+          }
+				});
+        if(canCreate){
+          polygon = new Polygon(mouse.x , mouse.y);
+          polygons.push(polygon);
+				}else {
+          window.onmousemove = (event) =>{
+            event = event || window.event;
+            context.clearRect(0,0,canvas.width,canvas.height);
+
+            var mouse ={
+              x: event.clientX + document.documentElement.scrollLeft + document.body.scrollLeft - canvas.offsetLeft - 14,
+              y: event.clientY + document.documentElement.scrollTop + document.body.scrollTop - canvas.offsetTop - 28
+            }
+            // 边界值
+            let leftNode = {
+              x: 0,
+              y: 0
+            } 
+            let rightNode = {
+              x : 600-28,
+              y: 600-28
+            }
+            
+            if(mouse.x <= leftNode.x) mouse.x = leftNode.x
+            if(mouse.x >= rightNode.x) mouse.x = rightNode.x
+            if(mouse.y <= leftNode.y) mouse.y = leftNode.y
+            if(mouse.y>= rightNode.y) mouse.y = rightNode.y
+
+            polygon.move(mouse.x , mouse.y);
+            drawPolygon(img, polygons);
+          }
+        }
+
+        drawPolygon(img, polygons);
+        
+        
+
+        window.onmouseup = function(){
+          window.onmousemove = null;
+        }
+				
+			}
+
+			
+
+		
+		}
+
+		
+
+
+		
+
+		function drawPolygon(img, polygons){
+			polygons.forEach(function(){
+				// this.stroke(context);
+				// this.fill(context);
+        context.drawImage(img, this.x, this.y, 28, 28)
+			});
+		}
+
+		Array.prototype.forEach = function(callback){
+			for(var i=0;i<this.length;i++){
+				callback.call(this[i]);
+			}
+		}
+
+		var Polygon = function(x , y){
+			this.x = x;
+			this.y = y;
+		}
+
+		Polygon.prototype = {
+			
+			
+			move:function(x,y){
+				this.x = x;
+				this.y = y;
+			}
+			
+		}
+	</script>
+	<title>绘制多边形</title>
+</head>
+<body>
+	<div >
+		<canvas id='cas' width="600" height="600">浏览器不支持canvas</canvas>
+		
+	</div>
+</body>
+</html>
