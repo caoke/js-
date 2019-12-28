@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>正则表达式</title>
+</head>
+<body>
+  <p>1、衔接线转驼峰 已知有字符串foo=”get-element-by-id”,写一个function将其转化成驼峰表示法”getElementById”</p>
+  <p>2、为了保证页面输出安全，我们经常需要对一些特殊的字符进行转义，请写一个函数escapeHtml，将"<", ">", "&", """ 进行转义</p>
+  <p>3、清除字符串前后空格</p>
+  
+
+</body>
+<script>
+  // 中划线转驼峰
+  let foo = "get-element-by-id"
+  const toCamel1 = (str) => {
+    return str.replace(/([^-])(?:-+([^-]))/g, ($0, $1, $2) => $1 + $2.toUpperCase())
+  }
+  const toCame2 = (str) => {
+    return str.replace(/(-)(\w)/g, ($0, $1, $2) =>{
+      console.log($0, $1, $2)
+      return $2.toUpperCase()
+    })
+  }
+  const toCame3 = (str) => {
+    return str.replace(/-\w/g, (word) => word.substring(1,2).toUpperCase() + word.substring(2))
+  }
+  console.table(
+    {value1:toCamel1(foo), value2: toCame2(foo), value3: toCame3(foo)}
+  )
+  // 2 转义字符
+  const escapeHtml = (str) => {
+    return str.replace(/[<>"&]/g, (match) => {
+      switch (match) {
+        case "<":
+            return "&lt;";
+        case ">":
+            return "&gt;";
+        case "&":
+            return "&amp;";
+        case "\"":
+            return "&quot;";
+        }
+    })
+  }
+  console.log(escapeHtml('<html>'))
+
+  // 3清除字符串前后空格
+  const clearSpan = (str) => str.replace(/^\s+/g, "").replace(/\s+$/,"")
+  console.log(clearSpan("  test string ").length)
+</script>
+</html>

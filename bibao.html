@@ -27,7 +27,7 @@
         var fnRef2 = outerFn();
         fnRef2();
         fnRef2();
-
+        // 依次打印出 0 1 2 3 4
         for(var i=0; i < 5; i ++) {
             (function(i) {
                 setTimeout(() =>{
@@ -41,5 +41,47 @@
                 console.log(i)
             }, 1000*i)
         }
+
+        // 判断下面函数的输出
+        function fun(n,o){
+          console.log(o);
+          return {
+            fun: function(m){
+              return fun(m,n);
+            }
+          };
+        }
+
+        var a = fun(0);  // ? undefined
+        a.fun(1);        // ? 0       
+        a.fun(2);        // ? 0
+        a.fun(3);        // ? 0
+
+        var b = fun(0).fun(1).fun(2).fun(3);// undefined 0 1 2
+
+
+        var c = fun(0).fun(1);  // ? undefined 0
+        c.fun(2);        // ? 1
+        c.fun(3);        // ? 1
+
+        // 原始对象
+        var a = 1
+        a.a = 2
+        console.log("a.a", a.a) // undefined 有点不理解 暂时理解为 Number类型不能有属性
+
+        var a = {n: 1}
+        var b = a
+        a.x = null
+        a.x = {n:2}
+        a = {n: 2}
+       
+   
+        // a.x = a = {n: 2}
+        
+        console.log('a.x', a.x)
+        console.log('a', a)
+        console.log('b.x', b.x)
+        console.log('b', b)
+
     </script>
 </html>

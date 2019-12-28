@@ -87,7 +87,7 @@
                 }
                 return arr;
             }
-            console.log(bianping3(arr2));
+            console.log('es6 ...',bianping3(arr2));
 
             //  join & split
             function bianping4(arr) {
@@ -95,10 +95,25 @@
                     return parseInt(item)
                 })
             }
-            console.log(bianping4(arr2))
+            console.log('join & split', bianping4(arr2))
 
             // es6 flat
-            console.log(arr2.flat(Infinity))
+            console.log('es6 flat',arr2.flat(Infinity))
+
+            // 冒泡排序
+            const maopao = (arr) => {
+              for(let i = 0; i < arr.length;  i++){
+                for(let j = 0; j < arr.length - 1 -i; j++) {
+                  if(arr[j] > arr[j+1]) {
+                    let tmp = arr[j+1]
+                    arr[j+1] = arr[j]
+                    arr[j] = tmp
+                  }
+                }
+              }
+              return arr
+            }
+            console.log('maopao',maopao(arr))
 
             // 冒泡排序
             function bubleSort(arr) {

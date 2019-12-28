@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>aplly</title>
+</head>
+<body>
+        请输入<input type="text" id="txt" />
+        <p>message is <span id="sp"></span></p>
+</body>
+<script>
+  var test = function(){
+    var arr1 = [1,3,4,5]; 
+    var arr2 = [2,6]; 
+    // apply() 接受参数是数组
+    // unshift() 方法将把它的参数插入 arrayObject 的头部，
+    // 并将已经存在的元素顺次地移到较高的下标处，以便留出空间。
+    // 该方法的第一个参数将成为数组的新元素 0，如果还有第二个参数，它将成为新的元素 1，以此类推。
+    Array.prototype.unshift.apply(arr1, arr2); 
+    return arr1;
+  } 
+  test()
+</script>
+</html>
+

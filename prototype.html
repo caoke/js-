@@ -7,6 +7,30 @@
     <title>prototype</title>
 </head>
 <body>
+    <div>
+        <ul>
+            <li>__proto__ 是原型链的链接</li>
+            <li> 通过 __proto__ 查找到prototype， prototype是原型</li>
+            <li>
+                var f = new F()<br>
+                f: 是实例对象  <br>
+                F： 是构造函数<br>
+                f通过__proto__ 找到F.prototype,所以f.__proto__ === F.prototype
+            </li>
+            <li>
+                构造器的原型属于 对象 Object ，也就是说 F.prototype 是 new object 出来的。所以 F.prototype通过 __proto__ 可以找到 Object.prototype<br>
+                即：F.prototype.__proto__ === Object.Prototype
+            </li>
+            <li>
+                function Function() 是函数构造器<br>
+                Function.__proto__ === Function.prototype<br/>
+                Function.prototype 是对象 Function.prototype.__proto__ === Object.prototype
+            </li>
+            <li>
+                终极：Objecy.prototype.__proto__ === null
+            </li>
+        </ul>
+    </div>
     <script>
         // 题目一
         var A = function () {};
@@ -47,9 +71,34 @@
         console.log(f.__proto__ === F.prototype)
         console.log(F.prototype)
         console.log(F.__proto__)
+        f.a();  // a  f 是对象
+        // f.b(); // 报错 浏览器停止下面的不会输出
+        console.log('f.__proto__ === F.prototype', f.__proto__ === F.prototype)
+        console.log('F.prototype', F.prototype)
+        console.log('F.__proto__', F.__proto__)
 
-        F.a();
-        F.b();
+        F.a(); // F 是函数 函数也是对象 所以输a
+        F.b(); // 函数构造器上有 b 所以输出b
+        
+        // 题目三
+        function Person(name) {
+            this.name = name
+        }
+        let p = new Person('Tom');
+        console.log(p.__proto__ === Person.prototype) // true
+        console.log(Person.__proto__ === Function.prototype) // true
+
+
+        var foo = {},
+        F = function(){};
+        Object.prototype.a = 'value a';
+        Function.prototype.b = 'value b';
+
+        console.log(foo.a); // value a
+        console.log(foo.b); // undefined
+
+        console.log(F.a); // value a
+        console.log(F.b); // value b
 
 
 
