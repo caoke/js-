@@ -5,40 +5,59 @@
         <title>函数</title>
     </head>
     <body>
-
+      <p>javaScript 采用词法作用域(lexical scoping)，也就是静态作用域。</p>
+      <p>因为 JavaScript 采用的是词法作用域，<span style="color: red;">函数的作用域在函数定义的时候就决定了。</span></p>
+      <p>为了实现词法作用域，JavaScript函数对象的内部状态不仅必须包括函数的代码，还必须包括对当前作用域链的引用。</p>
+      <p>函数对象和范围（一组变量绑定）之间的这种组合（在其中解析函数的变量）在计算机科学文献中称为闭包。</p>
     </body>
     <script type="text/javascript">
-        function Foo() {
-            getName = function(){
-                console.log(1);
-            }
-            //return this;
-        }
+      function Byte () {
+          getName = function () {
+              console.log(1);
+          }
+          console.log(this)
+          return this;
+      }
+      Byte.getName = function () {
+          console.log(2);
+      }
+      Byte.prototype.getName = function () {
+          console.log(3);
+      }
+      var getName = function () {
+          console.log(4);
+      }
+      function getName () {
+          console.log(5);
+      }
+      Byte.getName(); // 调用类的静态方法 2
+      getName(); // function getName()变量提升，之后被 var getName重新赋值
+      Byte().getName();// 实例方法 this指向window，所以 getName被重新赋值
+      getName();// 上一步设置getName = function() {console.log('1')}
+      new Byte.getName();// new运算符 优先级 低于 . 类的静态方法 
+      var b = new Byte()
+      console.log(b)
+      b.getName()
+      // new Byte().getName();// 3 这里想不通
+      // new new Byte().getName();
+      // new getName()
 
-        Foo.prototype.getName= function () {
-            console.log(2);
-        }
-        var getName = function () {
-            console.log(3);
-        }
-        function getName() {
-            console.log(4);
-        }
 
-        getName();//3
-        Foo();
-        getName();//1
-        new Foo().getName(); // 2
-        new new Foo().getName(); // 2
-        var arr = [1,2,3]
-        var data = {};
-        for (var i in arr) {
-            Object.assign(data,{
-                ["key_"+i]: 1
-            });
-        }
-
-        console.log(data);
+      function Byte () {
+        getName = function () {
+          console.log(1);
+        };
+        console.log(this);
+	      return {getName:function(){console.log(55)}};
+      };
+      Byte.prototype.getName = function () {
+        console.log(3);
+      };
+      Byte.getName = function () {
+        console.log(2);
+      }; 
+      var car = new Byte(); 
+      car.getName()
 
     </script>
 </html>

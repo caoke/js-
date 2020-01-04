@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>算法题</title>
+</head>
+<body>
+  <p>1、给定一段英文,统计哪一个字母出现的频率最高,出现了几次?</p>
+  <p>2、现有一个抽奖活动, 一共100万人参加, 奖品有1000个, 每个人最多中将1份,且已知每人有一个中将倍数, 为整数, 最大200, 最小1,要求写函数实现抽奖过程</p>
+</body>
+<script>
+  const count = (str) => {
+    let nStr = str.replace(/\s+/g, '')
+    let nArr = nStr.split('')
+    // let result = {}
+    let result = new Map()
+    for(let v of nArr) {
+      if(result.has(v)) {
+        result.set(v, result.get(v) + 1)
+      }else {
+        result.set(v,1)
+      }
+    }
+    return result
+  }
+  console.log(count('sjgdfsjhgfjhd  kjajhsd n sajsfjhsdfghd'))
+
+
+  // const 
+</script>
+</html>

@@ -10,6 +10,7 @@
   <p>1、衔接线转驼峰 已知有字符串foo=”get-element-by-id”,写一个function将其转化成驼峰表示法”getElementById”</p>
   <p>2、为了保证页面输出安全，我们经常需要对一些特殊的字符进行转义，请写一个函数escapeHtml，将"<", ">", "&", """ 进行转义</p>
   <p>3、清除字符串前后空格</p>
+  <p>4、给定一个JSON 数据，将下划线命名格式的key值转化为驼峰格式的key</p>
   
 
 </body>
@@ -51,5 +52,33 @@
   // 3清除字符串前后空格
   const clearSpan = (str) => str.replace(/^\s+/g, "").replace(/\s+$/,"")
   console.log(clearSpan("  test string ").length)
+
+  // 4、给定一个JSON 数据，将下划线命名格式的key值转化为驼峰格式的key,如下所示{a_b: [],a_c: []}
+  const jsonToCamel = (json) => {
+    let result;
+    const reg= /_(\w)/g
+    if(json instanceof Array) {
+      return json.map(e=>jsonToCamel(e))
+    }else if(json instanceof Object) {
+      result = {}
+      for(let key in json) {
+        let nk = key.replace(reg, ($0, $1)=> $1.toUpperCase())
+        result[nk] = jsonToCamel(json[key])
+      }
+      return result
+    } else {
+      return json
+    }
+  }
+
+  let json = {a_b: {b_c: '222'},a_c: [{c_d:1111111}]}
+  console.log(jsonToCamel(json))
+  
+  // 中划线转驼峰
+  function trainCaseToCamelCase (word) {
+    return word.replace(/-([\w])/g, (match, p1) => p1.toUpperCase());
+  }
+  console.log(trainCaseToCamelCase('shjsgd-hgjsgdjhsd'))
+
 </script>
 </html>
