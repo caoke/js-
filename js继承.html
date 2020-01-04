@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js继承</title>
+</head>
+<body>
+  
+</body>
+<script>
+  function Animal() {　　　　
+    this.species = "动物";　　
+  }
+  function Cat(name, color) {　　　　
+    this.name = name;　　　　
+    this.color = color;　　
+  }
+
+  //
+  var arr = [
+    {'类型':'时效达成'},
+    {'类型':'www'},
+    {'类型':'时效达成'}
+];
+
+function compare(){
+    return function(a,b){
+        var value1 = a['类型'];
+        var value2 = b['类型'];
+        if(value1 > value2) {
+          return 1
+        }else {
+          return -1
+        }
+        return 0
+    }
+}
+console.log(arr.sort(compare('类型')))
+</script>
+</html>
