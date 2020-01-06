@@ -7,7 +7,31 @@
   <title>js继承</title>
 </head>
 <body>
-  
+    <h4>js继承的几种方式：</h4>
+    <ol>
+      <li>
+        <h5>类式继承</h5>
+        <p>通过修改prototype的指向，将其指向类的实例上，实现继承 例如： B.prototype = new A()</p>
+        <h5>缺点</h5>
+        <p>子类共享父类属性，并且可以任意修改，影响其他子类</p>
+      </li>
+      <li>
+          <h5>构造函数式继承</h5>
+          <p>就是通过call，apply改变this的指向，使B能够调用A的属性</p>
+          <h5>缺点</h5>
+          <p>构造函数式继承并没有继承父类原型上的方法</p>
+      </li>
+      <li>
+        <h5>组合式继承</h5>
+        <p>结合类式继承和构造函数式继承两种方案，组合式继承</p>
+        <h5>缺点</h5>
+        <p>a、子类仍旧无法传递动态参数给父类！b、父类的构造函数被调用了两次</p>
+      </li>
+      <li>
+        <h5 style="color:red;">寄生式组合继承</h5>
+        <p>js继承常用方法：寄生组合式继承的思想在于：用一个 F 空的构造函数去取代执行了父类的构造函数</p>
+      </li>
+    </ol>
 </body>
 <script>
   function Animal() {　　　　
@@ -18,25 +42,197 @@
     this.color = color;　　
   }
 
-  //
-  var arr = [
-    {'类型':'时效达成'},
-    {'类型':'www'},
-    {'类型':'时效达成'}
-];
+  // es5实现 password是只能内部访问
+  function GithubUser(username,password) {
+    // private属性
+    let _password = password
+    // public属性
+    this.username = username
+    // public方法
+    GithubUser.prototype.login = function () {
+        console.log(this.username + '要登录Github，密码是' + _password)
+    }
+  }
 
-function compare(){
-    return function(a,b){
-        var value1 = a['类型'];
-        var value2 = b['类型'];
-        if(value1 > value2) {
-          return 1
-        }else {
-          return -1
-        }
-        return 0
+  // 1、 类式继承 通过 B.prototype = new A()
+  // 需要实现 例如juejinuser 可以直接使用githubUser的账号密码登陆
+  // 声明另外一个类 JuejinUser
+  function JuejinUser1(username, password) {
+    this.articles = 3
+    const prototype = new GithubUser(username, password)
+    this.__proto__ = prototype
+  }
+  let juejinUser1 = new JuejinUser1('类式继承', '1')
+  console.log(juejinUser1)
+  juejinUser1.login()
+
+  // 2、 构造函数式继承 通过call()、apply（） 来实现
+  function JuejinUser2(username, password) {
+      GithubUser.call(this, username, password)
+      this.articles = 3 // 文章数量
+  }
+  let juejinUser2 = new JuejinUser2('构造函数式继承', '2')
+  console.log(juejinUser2)
+  // 构造函数式继承并没有继承父类原型上的方法
+  // console.log(juejinUser2.login()) // TypeError: juejinUser1.login is not a function 
+
+
+  // 3、组合式继承
+  function JuejinUser3(username, password) {
+    GithubUser.call(this, username, password)
+    this.articles = 3 // 文章数量
+  }
+  JuejinUser3.prototype = new GithubUser()
+  let juejinUser3 = new JuejinUser3('组合式继承', '3')
+  console.log(juejinUser3)
+
+  // 4、寄生组合式继承 初版
+  function createObject(o) {
+    function f() {}
+    f.prototype = o
+    return new f()
+  }
+  function JuejinUser4(username,password) {
+    this.articles = 3 // 文章数量
+    GithubUser.call(this, username,password);  
+  }
+  JuejinUser4.prototype = createObject(GithubUser.prototype)
+  let juejinUser4 = new JuejinUser4('寄生组合式继承', 4)
+  console.log(juejinUser4)
+  console.log(juejinUser4.login())
+
+  // 5、寄生组合式继承 优化版
+  function inherit(child, parent) {
+    // 继承父类的原型
+    const p = Object.create(parent.prototype)
+    // 重写子类的原型
+    child.prototype = p
+    // 重写被子类污染的constructor
+    p.constructor = child
+  }
+  function JuejinUser5(username, password) {
+    GithubUser.call(this, username, password) // 继承属性
+    this.articles = 3
+  }
+
+  // 实现原型上的方法
+  inherit(JuejinUser5, GithubUser)
+  let juejinUser5 = new JuejinUser5('寄生组合式继承', 5)
+  console.log(juejinUser5)
+  juejinUser5.login()
+
+
+  // 6、es6实现继承
+  // es6 实现一个类GithubUser， 它拥有一个login方法，和一个静态方法getPublicServices, 用于获取public的方法列表
+  class GithubUserEs6{
+    static getPublicServices() {
+
+    }
+    constructor(username, password) {
+      this.username = username
+      this.password = password
+    }
+
+    login() {
+      console.log(`${this.username}要登录github,密码是${this.password}`)
+    }
+  }
+
+  class JuejinUserEs6 extends GithubUserEs6 {
+    constructor(username, password) {
+      super(username, password);
+    }
+  }
+
+  let juejinUser6 = new JuejinUserEs6('Es6继承', 6)
+  console.log(juejinUser6)
+  juejinUser6.login()
+
+
+/*******************************************分割线********************************************************/
+// 要调用Date上的实例方法，必须通过Date构造出来，否则不允许调用Date的方法
+
+/**
+ * 经典的js寄生组合式继承 
+ */
+function MyDate1() {
+    Date.apply(this, arguments);
+    this.abc = 1;
+}
+
+function inherits(subClass, superClass) {
+    function Inner() {}
+    Inner.prototype = superClass.prototype;
+    subClass.prototype = new Inner();
+    subClass.prototype.constructor = subClass;
+}
+
+inherits(MyDate1, Date);
+
+MyDate1.prototype.getTest = function() {
+    return this.getTime();
+};
+
+
+let date1 = new MyDate1();
+console.log(date1.__proto__)
+// console.log(date1.getTest()); // TypeError: this is not a Date object. 一般来说，寄生组合式继承是可以实现方法的继承 但因是Date类，因为不是Date构造出来的实例，无法调用其方法 
+
+// ES5实现方案
+// 需要考虑polyfill情况
+Object.setPrototypeOf = Object.setPrototypeOf ||
+function(obj, proto) {
+    obj.__proto__ = proto;
+    return obj;
+};
+
+/**
+ * 用了点技巧的继承，实际上返回的是Date对象
+ */
+function MyDate() {
+    // bind属于Function.prototype，接收的参数是：object, param1, params2...
+    var dateInst = new(Function.prototype.bind.apply(Date, [Date].concat(Array.prototype.slice.call(arguments))))();
+
+    // 更改原型指向，否则无法调用MyDate原型上的方法
+    // ES6方案中，这里就是[[prototype]]这个隐式原型对象，在没有标准以前就是__proto__
+    Object.setPrototypeOf(dateInst, MyDate.prototype);
+
+    dateInst.abc = 1;
+
+    return dateInst;
+}
+
+// 原型重新指回Date，否则根本无法算是继承
+Object.setPrototypeOf(MyDate.prototype, Date.prototype);
+
+MyDate.prototype.getTest = function getTest() {
+    return this.getTime();
+};
+
+let date = new MyDate();
+
+// 正常输出，譬如1515638988725
+console.log(date.getTest());
+
+// es6实现方案
+class MyDateEs6 extends Date {
+    constructor() {
+        super();
+        this.abc = 1;
+    }
+    getTest() {
+        return this.getTime();
     }
 }
-console.log(arr.sort(compare('类型')))
+let dateES6 = new MyDateEs6();
+
+// 正常输出，譬如1515638988725
+console.log(dateES6.getTest());
+
+
+
+
+
+
 </script>
 </html>

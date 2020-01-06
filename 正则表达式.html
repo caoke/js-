@@ -11,6 +11,7 @@
   <p>2、为了保证页面输出安全，我们经常需要对一些特殊的字符进行转义，请写一个函数escapeHtml，将"<", ">", "&", """ 进行转义</p>
   <p>3、清除字符串前后空格</p>
   <p>4、给定一个JSON 数据，将下划线命名格式的key值转化为驼峰格式的key</p>
+  <p>5、str="hello{total}"  obj={total:'world'} ，用obj中对应的值进行替代</p>
   
 
 </body>
@@ -21,9 +22,9 @@
     return str.replace(/([^-])(?:-+([^-]))/g, ($0, $1, $2) => $1 + $2.toUpperCase())
   }
   const toCame2 = (str) => {
-    return str.replace(/(-)(\w)/g, ($0, $1, $2) =>{
-      console.log($0, $1, $2)
-      return $2.toUpperCase()
+    return str.replace(/-(\w)/g, ($0, $1, $2) =>{
+      console.log($0, $1)
+      return $1.toUpperCase()
     })
   }
   const toCame3 = (str) => {
@@ -79,6 +80,16 @@
     return word.replace(/-([\w])/g, (match, p1) => p1.toUpperCase());
   }
   console.log(trainCaseToCamelCase('shjsgd-hgjsgdjhsd'))
+
+  // 5 替换
+  var str="hello{total}"
+  var obj={total:'world'}
+  function replaceStr (str) {
+    return str.replace(/\{([a-zA-Z]+)\}/,(str, $1) =>{
+      return obj[$1]
+    })
+  }
+  console.log(replaceStr(str))
 
 </script>
 </html>
