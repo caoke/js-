@@ -75,6 +75,17 @@
         console.log(delRepeatOrderedArr(arr));
 
 
+        // 英文大小写取反 abC -》 ABc
+        let upDownStr = 'asjhdgshFRGV1234'
+        upDownStr = upDownStr.replace(/[a-zA-Z]/g, content => {
+          // content 每次正则匹配的结果
+          // 验证是否大小写 把某个字符转换成大写，如果还是和原来一样 表明该字符是大写则转换成小写
+          return content.toLocaleUpperCase() === content ? content.toLowerCase() : content.toUpperCase()
+        })
+        console.log(upDownStr)
+
+
+
         </script>
     </body>
 </html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>深拷贝</title>
+</head>
+<body>
+<script type="text/javascript">
+	function deepCopy(obj) {
+    let ret = Array.isArray(obj) ? [] : {}
+    for(let k in obj) {
+      if(obj.hasOwnProperty(k)){
+        if(typeof(obj[k]) === 'object' && obj[k] != null) {
+          ret[k] = deepCopy(obj[k])
+        }else{
+          ret[k] = obj[k]
+        }
+      }
+    }
+    return ret
+
+  }
+
+  const originObj = {
+    name: 'lili',
+    children:{
+      name: 'susu',
+      age: 30
+    }
+  }
+  const deepObj = deepCopy(originObj)
+
+  originObj.children.age = 100
+
+  console.log(originObj, deepObj)
+  console.log(originObj instanceof Array)
+
+
+</script>
+</body>
+</html>
