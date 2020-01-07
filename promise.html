@@ -7,49 +7,197 @@
   <title>Document</title>
 </head>
 <body>
-  
+  <p>1、手动实现promise</p>
 </body>
 <script>
+  //1、 手写promise
+    class MyPromise{
+      constructor(executor) {
+        // 初始化state等待状态
+        this.state = 'pending'
+        // 存储成功的值
+        this.value = undefined
+        // 存储失败的值
+        this.reason = undefined
 
- // 实现一个任务队列，只有在执行了start之后 任务才一个个执行
+        this.onResolvedCallbacks = []
+        this.onRejectedCallBacks = []
 
-  function Quene() { 
-    this.queue = []
-  }
-  Quene.prototype.task = function(time, callback) {
-    this.queue.push({time, callback})
-    return this
-  }  
-  Quene.prototype.start = function() {
-    let result = Promise.resolve()
-    this.queue.forEach(item => {
-      result = result.then(() => {
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve(item.callback())
-          }, item.time)
+        let resole = (value) => {
+          if(this.state === 'pending') {
+            this.state = 'fulfilled'
+            this.value = value;
+            // 一旦resolve执行，调用成功数组的函数
+            this.onResolvedCallbacks.forEach(fn => fn())
+          }
+        }
+
+        let reject =(reason) => {
+          if(this.state ==='pending') {
+            this.state = 'rejected'
+            this.reason = reason
+            this.onRejectedCallBacks.forEach(fn=> fn())
+          }
+        }
+
+        try {
+          executor(resole, reject)
+        } catch(err) {
+          reject(err)
+        }
+        
+      }
+      // then 方法 有两个参数onFulfilled onRejected
+      then(onFulfilled, onRejected) {
+        // onFulfilled如果不是函数，就忽略onFulfilled，直接返回value
+        onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value;
+        // onRejected如果不是函数，就忽略onRejected，直接扔出错误
+        onRejected = typeof onRejected === 'function' ? onRejected : err => { throw err };
+        let promise2 = new MyPromise((resole, reject) => {
+          if(this.state === 'fulfilled') {
+           // 异步
+            setTimeout(() => {
+              try {
+                let x = onFulfilled(this.value);
+                resolvePromise(promise2, x, resolve, reject);
+              } catch (e) {
+                reject(e);
+              }
+            }, 0);
+          } else if(this.state === 'rejected') {
+            // 异步
+            setTimeout(() => {
+              // 如果报错
+              try {
+                let x = onRejected(this.reason);
+                resolvePromise(promise2, x, resolve, reject);
+              } catch (e) {
+                reject(e);
+              }
+            }, 0);
+          }else {
+            this.onResolvedCallbacks.push(() => {
+              // 异步
+              setTimeout(() => {
+                try {
+                  let x = onFulfilled(this.value);
+                  resolvePromise(promise2, x, resolve, reject);
+                } catch (e) {
+                  reject(e);
+                }
+              }, 0)
+            })
+
+            this.onRejectedCallBacks.push(() => {
+               // 异步
+                setTimeout(() => {
+                  // 如果报错
+                  try {
+                    let x = onRejected(this.reason);
+                    resolvePromise(promise2, x, resolve, reject);
+                  } catch (e) {
+                    reject(e);
+                  }
+                }, 0);
+            })
+          }
         })
-      })
-    })
-    return result
-  }
-  new Quene()
-    .task(1000, () => {
-        console.log(1)
-    })
-    .task(2000, () => {
-        console.log(2)
-    })
-    .task(1000, () => {
-        console.log(1)
-    })
-    .start()
+
+        // 返回promise，完成链式
+        return promise2;
+      }
+    }
+
+    function resolvePromise(promise2, x, resole, reject) {
+      // 循环引用报错
+      if(promise2 === x) {
+        // reject报错
+        return reject(new TypeError('Chaining cycle detected for promise'));
+      }
+
+      // 防止多次调用
+      let called;
+
+      if(x != null && (typeof x === 'object' || typeof x === 'function')) {
+        try {
+          // A+规定，声明then = x的then方法
+          let then = x.then
+          // 如果then是函数，就默认是promise了
+          if(typeof then === 'function') {
+            then.call(x, y => {
+              if(called) return
+              called = true
+              resolvePromise(promise2, y, resole, reject)
+            }, err => {
+              // 成功和失败只能调用一个
+              if (called) return;
+              called = true;
+              reject(err);// 失败了就失败了
+            })
+          }else {
+            resolve(x)
+          }
+        }catch (err) {
+          // 也属于失败
+          if (called) return;
+          called = true;
+          // 取then出错了那就不要在继续执行了
+          reject(err);
+        }
+      }else {
+        resole(x)
+      }
 
 
-    // 手写promise
+    }
 
 
+    //resolve方法
+MyPromise.resolve = function(val){
+  return new MyPromise((resolve,reject)=>{
+    resolve(val)
+  });
+}
+//reject方法
+MyPromise.reject = function(val){
+  return new MyPromise((resolve,reject)=>{
+    reject(val)
+  });
+}
+//race方法 
+MyPromise.race = function(promises){
+  return new MyPromise((resolve,reject)=>{
+    for(let i=0;i<promises.length;i++){
+      promises[i].then(resolve,reject)
+    };
+  })
+}
+//all方法(获取所有的promise，都执行then，把结果放到数组，一起返回)
+MyPromise.all = function(promises){
+  let arr = [];
+  let i = 0;
+  function processData(index,data){
+    arr[index] = data;
+    i++;
+    if(i == promises.length){
+      resolve(arr);
+    };
+  };
+  return new MyPromise((resolve,reject)=>{
+    for(let i=0;i<promises.length;i++){
+      promises[i].then(data=>{
+        processData(i,data);
+      },reject);
+    };
+  });
+}
 
 
+let my = new MyPromise((resole, reject) =>{
+  resole(2)
+})
+my.then(res => {
+  console.log(res)
+})
 </script>
 </html>
