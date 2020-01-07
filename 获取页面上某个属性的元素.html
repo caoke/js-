@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>获取页面上某个属性的所有元素</title>
+</head>
+<body>
+  <div class="box first"></div>
+  <div class="box"></div>
+  <div></div>
+  <div class="box"></div>
+  <div></div>
+  <div class="box"></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</body>
+<script>
+function $attr(property, value) {
+  let eles = document.getElementsByTagName('*')
+  let result = []
+  eles = Array.from(eles)
+  result = eles.filter(item => {
+    let reg = new RegExp(`\\b${value}\\b`)
+    return reg.test(item.getAttribute(property))
+  })
+  return result
+}
+
+console.log($attr('class', 'box'))
+
+</script>
+</html>

@@ -53,6 +53,7 @@
         onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value;
         // onRejected如果不是函数，就忽略onRejected，直接扔出错误
         onRejected = typeof onRejected === 'function' ? onRejected : err => { throw err };
+        
         let promise2 = new MyPromise((resole, reject) => {
           if(this.state === 'fulfilled') {
            // 异步
