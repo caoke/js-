@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>字节跳动面试</title>
+</head>
+<body>
+  <ul>
+    <li>vue2.x中为什么不能通过数组下标修改内容？</li>
+    <li>vue中computed的属性怎么实现的，是什么时候收集的依赖</li>
+    <li>拖拽用什么方案实现</li>
+    <li>大数据量的列表前端性能怎么优化</li>
+  </ul>
+</body>
+<script>
+// 下面代码的执行顺序
+  console.log('begin')
+  new Promise(() => {
+    console.log('promise 0');
+    setTimeout(() => {
+        console.log('setTimeout 0')
+        Promise.resolve().then(() => {
+            console.log('promise 1')
+            setTimeout(() => {
+                console.log('setTimeout 1')
+            })
+            Promise.resolve().then(() => console.log(4))
+        }).then(() => {
+            console.log('promise 2')
+        })
+    }, 0)
+  });
+  console.log('end')
+
+  // begin
+  // promise 0
+  // end
+  // setTimeout 0
+  // promise 1
+  // 4
+  // promise 2
+  // setTimeout 1
+
+  // 实现继承
+  function Animal(name) {
+      this.name = name
+  }
+  function Dog() {}
+
+  // 最高效地发送完所有请求, 当所有请求返回后执行 callback, 有并发数限制 max, 发请求的函数用 fetch 即可
+
+  function sendRequest(urls, max, callback) {
+    
+  }
+
+  // 有这样一个Queue的类 task存放一个函数 但不执行 当start才能隔1秒输出1 隔两秒输出2 再隔1秒输出3
+  // new Queue() 
+  // .task(1000, () => { 
+  //     console.log(1) 
+  // })
+  // .task(2000, () => { 
+  //     console.log(2) 
+  // })
+  // .task(1000, () => { 
+  //     console.log(3) 
+  // })
+  // .start() 
+
+  // function Queue() {
+  //   this.arr = []
+    
+  //   this.task = (num, time) => {
+  //     return new Promise((resolve, reject) => {
+  //       setTimeout(()=> {
+  //         //console.log(num)
+  //         resolve(num);
+  //         }, time);
+  //     })
+  //   }
+  //   this.start = () => {
+  //     // 并行
+  //     Promise.all(this.arr).then(result => {
+  //       console.log(result)
+  //     })
+  //   }
+  // }
+
+  // let q = new Queue()
+  // q.task(1,1000).start()
+
+
+
+class Queue {
+    constructor() {
+        this.queue = [];
+        this.time = 0;
+    }
+    task(t, fn) {
+        this.time += t;
+        this.queue.push([fn, this.time]);
+        return this;
+    }
+    start() {
+        this.queue.forEach((item) => {
+            setTimeout(() => {
+                item[0]();
+            }, item[1]);
+        })
+    }
+}
+ 
+new Queue()
+    .task(1000, () => {
+        console.log(1)
+    })
+    .task(2000, () => {
+        console.log(2)
+    })
+    .task(1000, () => {
+        console.log(3)
+    })
+    .start() 
+
+
+
+
+</script>
+</html>
