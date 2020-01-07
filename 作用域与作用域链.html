@@ -143,5 +143,20 @@
 	_isFirstLoad2(10)   // true
 	_isFirstLoad2(10); //true 
 
+ function Queue() {
+
+ }
+ Queue()
+ .task(1000, ()=> {
+   console.log(1)
+ })
+ .task(2000, () => {
+   console.log(2)
+ })
+ .task(1000, () => {
+   console.log(1)
+ })
+ .start()
+
 </script>
 </html>

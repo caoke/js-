@@ -9,8 +9,11 @@
 <body>
   <p>1、给定一段英文,统计哪一个字母出现的频率最高,出现了几次?</p>
   <p>2、现有一个抽奖活动, 一共100万人参加, 奖品有1000个, 每个人最多中将1份,且已知每人有一个中将倍数, 为整数, 最大200, 最小1,要求写函数实现抽奖过程</p>
+  <p>3、数组中查找和为k的组合</p>
+  <p>4、找同构字符串。比如abc和cba、acb是同构的</p>
 </body>
 <script>
+  // 1、 
   const count = (str) => {
     let nStr = str.replace(/\s+/g, '')
     let nArr = nStr.split('')
@@ -27,7 +30,50 @@
   }
   console.log(count('sjgdfsjhgfjhd  kjajhsd n sajsfjhsdfghd'))
 
+  // 3  [1,4,3,9,2,7] 找到和为 5的组合
+  const sumArr = (arr, sum) => {
+    let result = []
+    arr.forEach((element, index) => {
+      let otherElement  = sum - element
+      if(arr.indexOf(otherElement) > -1) {
+        result.push(arr.splice(index,1).concat(arr.splice(arr.indexOf(otherElement),1)))
+      }
+    });
+    return result
+  }
+  let arr = [1,4,3,9,2,7]
+  console.log(sumArr(arr, 5))
 
-  // const 
+
+  // 4
+  const tonggou = (arr) => {
+    let result = []
+    let len = arr.length
+
+    for(let i=0; i<arr.length-1; i++) {
+      let tonggou = []
+      for(let j = i+1; j < arr.length; j++ ){
+        if(arr[j].length === arr[i].length) {
+          let curr = arr[i].split('').sort().toString()
+          let target = arr[j].split('').sort().toString()
+          if(curr === target) {
+            if(tonggou.length){
+              tonggou.push(arr[j])
+            }else {
+              tonggou = [arr[i], arr[j]]
+            }
+            arr.splice(j,1)
+            j--
+          }
+          if(tonggou.length && j === arr.length-1) result.push(tonggou)
+        }
+       
+      }
+    }
+    return result
+  }
+  let arr1 = ['abc', 'fed', 'cba', 'efd','bca', 'fde', 'abb']
+  console.log(tonggou(arr1))
+
 </script>
 </html>

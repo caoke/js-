@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>三栏布局</title>
+  <style>
+    *{
+      padding: 0px;
+      margin: 0px;
+    }
+    .main{
+      margin: 20px 0px;
+    }
+    .box{
+      width: 300px;
+      height: 500px;
+    }
+    .left{
+      background: yellow;
+    }
+    .middle{
+      background: rebeccapurple;
+    }
+    .right{
+      background: blue;
+    }
+
+    .float-left{
+      float: left;
+    }
+    .float-middle{
+      margin-left: 300px;
+      margin-right: 300px;
+    }
+    .float-right{
+      float: right;
+    }
+    .main::after{
+      content:'';
+      display: block;
+      clear: both;
+    }
+
+    .position-box{
+      position: static;
+    }
+    .position-left{
+      position: absolute;
+      left: 0;
+    }
+    .position-middle{
+      position: absolute;
+      left: 300px;
+      right: 300px;
+      width: calc( 100% - 600px);
+    }
+    .position-right{
+      position: absolute;
+      right: 0px;
+    }
+
+    .flex-box{
+      display: flex;
+      justify-content: space-around;
+    }
+
+
+
+    
+  </style>
+</head>
+<body>
+  <!-- <article class="main" >
+    <div class="box left float-left">left</div>
+    <div class="box right float-right">right</div>
+    <div class="middle float-middle">
+      middle
+      <h5>浮动布局</h5>
+    </div>
+  </article>
+
+
+  <article class="main position-box">
+    <div class="box left position-left">left</div>
+    <div class="middle position-middle">
+        middle
+        <h5>绝对定位</h5>
+      </div>
+    <div class="box right position-right">right</div>
+    
+  </article> -->
+
+  <div class="main flex-box" >
+    <div class="box left flex-left">left</div>
+    <div class="box middle flex-middle">
+        middle
+        <h5>flex布局</h5>
+      </div>
+    <div class="box right flex-right">right</div>
+  </div>
+
+  <btn class="btn">11111111</btn>
+
+</body>
+<script>
+  // 手动实现 ('.btn').css('color','red').delay(300).hide();
+  // function $(selector) {
+  //  this.selector = document.body.querySelector(selector)
+  //  this.css = function(attr, value) {
+  //     this.selector.setAttribute(attr, value)
+  //     return this
+  //   }
+  // }
+
+  // $.delay = function(time) {
+
+  // }
+  // $.hide = function(time) {
+  //   this.selector.setAttribute('display', 'none')
+  //   return this
+  // }
+
+  // $('.btn').css('color', 'red')
+
+</script>
+</html>
