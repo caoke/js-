@@ -27,7 +27,7 @@
         var fnRef2 = outerFn();
         fnRef2();
         fnRef2();
-        // 依次打印出 0 1 2 3 4
+        // 依次打印出 0 1 2 3 4 闭包
         for(var i=0; i < 5; i ++) {
             (function(i) {
                 setTimeout(() =>{
@@ -35,12 +35,21 @@
                 }, 1000*i)
             })(i)
         }
-
+        // es6 let 块级作用域
         for(let i=0; i < 5; i ++) {
             setTimeout(() =>{
                 console.log(i)
             }, 1000*i)
         }
+        let fn = function(i) {
+          console.log('bind' + i)
+        }
+        // bind
+        for(var i = 0; i<5; i++) {
+          setTimeout(fn.bind(null, i), 1000)
+        }
+
+
 
         // 判断下面函数的输出
         function fun(n,o){

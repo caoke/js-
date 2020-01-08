@@ -24,7 +24,7 @@ function $attr(property, value) {
   let result = []
   eles = Array.from(eles)
   result = eles.filter(item => {
-    let reg = new RegExp(`\\b${value}\\b`)
+    let reg = new RegExp(`\\b${value}\\b`) // \b表示字符边界
     return reg.test(item.getAttribute(property))
   })
   return result
