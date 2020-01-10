@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>跨域</title>
+</head>
+<body>
+  <p>1、jsonp的跨域方案</p>
+  <p>2、document.domain + iframe</p>
+  <p>3、CORS 需要后台设置允许跨域</p>
+  <p>4、开发用 node做代理，线上用nginx代理</p>
+</body>
+<script>
+  //创建script发送请求
+//请求返回执行cb函数，并且删除创建的script
+//类似于$ajax中的jsonp
+function jsonp(url,params,cb){
+  return new Promise((resolve,reject)=>{
+    window[cb] = function(data){
+        resolve(data);
+        document.body.removeChild(script);
+    }
+    params={...params,cb}
+    let arrs =[]
+    for(let key in params){
+        arrs.push(`${key}=${params[key]}`)
+    }
+    let script = document.createElement('script');
+    script.src= url + '?'+ arrs.join('&');
+    document.body.appendChild(script);
+  })
+}
+jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{ wd:'%E8%B7%A8%E5%9F%9F'},'show')
+.then(data=>{
+  console.log(data)    
+})
+
+// CORS 
+const http = require('http')
+const whitList = ['http://localhost:4000'];
+http.createServer(function (req, res) {
+  let origin = req.headers.origin;
+  //在白名单中的域名才能访问
+  if(whitList.includes(origin)){
+    //允许的域名(* 所有域)，*不能和Access-Control-Allow-Credentials一起使用
+    res.header("Access-Control-Allow-Origin", "*");
+    //允许携带哪个头访问，不设置不能携带参数
+    res.header("Access-Control-Allow-Headers","ContentType");
+    //允许的方法，不设置默认支持GET、HEAD、POST，其他类型必须设置才能处理请求
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    //运行携带cookie，设置之后还能服务器才能接受cookie
+    res.header("Access-Control-Allow-Credentials",true);
+    //允许前端获取哪个头，不设置浏览器不能解析后台返回的参数
+    res.header("Access-Control-Allow-Expose-Headers",'ContentType');
+    if(req.method=== 'OPTIONS'){
+        res.end()
+    }
+  }
+}).listen(9000, function () {
+    console.log('server is runing at 9000')
+})
+
+
+</script>
+</html>

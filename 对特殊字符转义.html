@@ -7,6 +7,7 @@
   <title>对特殊字符转义</title>
 </head>
 <body>
+
   <p>为了保证页面输出安全，我们经常需要对一些特殊的字符进行转义，请写一个函数escapeHtml，将"<", ">", "&", """ 进行转义</p>
   <script>
     function escapeHtml(str) {
@@ -20,6 +21,8 @@
                 return "&amp;";
             case "\"":
                 return "&quot;";
+            case " ":
+                return "&nbsp;"
             }
         });
       }

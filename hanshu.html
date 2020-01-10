@@ -31,33 +31,33 @@
           console.log(5);
       }
       Byte.getName(); // 调用类的静态方法 2
-      getName(); // function getName()变量提升，之后被 var getName重新赋值
-      Byte().getName();// 实例方法 this指向window，所以 getName被重新赋值
-      getName();// 上一步设置getName = function() {console.log('1')}
-      new Byte.getName();// new运算符 优先级 低于 . 类的静态方法 
+      getName(); // function getName()变量提升，之后被 var getName重新赋值 4
+      Byte().getName();// 实例方法 this指向window，所以 getName被重新赋值 1
+      getName();// 上一步设置getName = function() {console.log('1')} 1
+      new Byte.getName();// new运算符 优先级 低于 . 类的静态方法  2
       var b = new Byte()
       console.log(b)
-      b.getName()
-      // new Byte().getName();// 3 这里想不通
-      // new new Byte().getName();
-      // new getName()
+      b.getName() // 3
+      new Byte().getName();// 3 这里想不通
+      new new Byte().getName();
+      new getName()
 
 
-      function Byte () {
-        getName = function () {
-          console.log(1);
-        };
-        console.log(this);
-	      return {getName:function(){console.log(55)}};
-      };
-      Byte.prototype.getName = function () {
-        console.log(3);
-      };
-      Byte.getName = function () {
-        console.log(2);
-      }; 
-      var car = new Byte(); 
-      car.getName()
+      // function Byte () {
+      //   getName = function () {
+      //     console.log(1);
+      //   };
+      //   console.log(this);
+	    //   return {getName:function(){console.log(55)}};
+      // };
+      // Byte.prototype.getName = function () {
+      //   console.log(3);
+      // };
+      // Byte.getName = function () {
+      //   console.log(2);
+      // }; 
+      // var car = new Byte(); 
+      // car.getName()
 
     </script>
 </html>
