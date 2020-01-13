@@ -5,7 +5,13 @@
       
     </body>
     <script type="text/javascript">
-      let str = aBc;
+      let str = 'aBc';
+      function upOrLowCase(str) {
+       return str.replace(/[a-zA-Z]/g,element => {
+          return element.toLocaleUpperCase() === element ? element.toLowerCase() : element.toLocaleUpperCase()
+        });
+      }
+      console.log(upOrLowCase(str))
       
     </script>
 </html>

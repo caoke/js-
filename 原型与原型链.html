@@ -31,7 +31,9 @@
   console.log(a.__proto__ === a.constructor.prototype); //true
   console.log(a.__proto__ === A.prototype); //true
 
-  /*3、Object.create()方式*/
+  /*
+   * 3、Object.create()方式  该方式创建的对象没有prototype
+   */
   var a1 = {a:1}
   var a2 = Object.create(a1);
   console.log(a2.__proto__); //Object {a: 1}

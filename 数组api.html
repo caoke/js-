@@ -7,9 +7,9 @@
     <body>
         <p>数组API</p>
         <ul>
-            <li>forEach 遍历数组所有元素</li>
-            <li>every 判断数组所有元素是否都符合条件</li>
-            <li>some 判断数组是否至少有一个元素符合条件</li>
+            <li>forEach 遍历数组所有元素 在foreach中不接受return</li>
+            <li>every 判断数组所有元素是否都符合条件 可以return false中断</li>
+            <li>some 判断数组是否至少有一个元素符合条件 可以return true中断</li>
             <li>sort 排序</li>
             <li>map 对数组元素重组 返回一个新的数组</li>
             <li>filter 过滤符合条件的元素 返回一个新的数组</li>
@@ -35,7 +35,7 @@
 
 
         //Math 随机数
-        var a = Math.random() // 0-1 清除缓存
+        var a = Math.random() // 0-1 清除缓存 包含0 但不包含1
 
         //数组APi forEach
         var arr = [1,2,3]

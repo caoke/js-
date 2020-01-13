@@ -18,10 +18,10 @@
       {'类型':'时效达成'}
     ];
 
-  function compare(){
+  function compare(type){
       return function(a,b){
-          var value1 = a['类型'];
-          var value2 = b['类型'];
+          var value1 = a[type];
+          var value2 = b[type];
           if(value1 > value2) {
             return 1
           }else {

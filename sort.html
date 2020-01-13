@@ -58,49 +58,6 @@
             console.log(quickSort(arr));
             console.log([...new Set([1,98,45,63,53,34,23,3,67,55,99])])
 
-
-            //扁平化数组 方法一
-            let arr2 = [1,[2,3],[3,[4,5]]];
-            function bianping1(arr,ret = []) {
-                for(let i = 0;i<arr.length;i++){
-                    if(arr[i] instanceof Array){
-                        bianping1(arr[i],ret);
-                    }else {
-                        ret.push(arr[i]);
-                    }
-                }
-                return ret;
-            }
-            console.log(bianping1(arr2)); //[1,2,3,3,4,5]
-            // reduce
-            function bianping2(arr) {
-                return arr.reduce((result, item)=> {
-                    return result.concat(Array.isArray(item) ? bianping2(item) : item);
-                }, []);
-            }
-            console.log(bianping2(arr2));
-
-            // ... 扩展运算符
-            function bianping3(arr) {
-                // while遍历直到arr中没有数组 some存在符合条件的则为true
-                while(arr.some(item=>Array.isArray(item))) {
-                    arr = [].concat(...arr);
-                }
-                return arr;
-            }
-            console.log('es6 ...',bianping3(arr2));
-
-            //  join & split
-            function bianping4(arr) {
-                return arr.join(',').split(',').map(item => {
-                    return parseInt(item)
-                })
-            }
-            console.log('join & split', bianping4(arr2))
-
-            // es6 flat
-            console.log('es6 flat',arr2.flat(Infinity))
-
             // 冒泡排序
             const maopao = (arr) => {
               for(let i = 0; i < arr.length;  i++){
@@ -128,7 +85,7 @@
                 }
                 return arr;
             }
-            console.log(bubleSort(arr))
+            console.log('bubleSort',bubleSort(arr))
 
 
             // 插入排序
