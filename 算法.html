@@ -12,7 +12,8 @@
   <p>3、数组中查找和为k的组合</p>
   <p>4、找同构字符串。比如abc和cba、acb是同构的</p>
   <p>5、实现一个任务队列，只有在执行了start之后 任务才一个个执行</p>
-  <p></p>
+  <p>6、两数之和</p>
+  <p>7、查过js数据范围的两个大数相加</p>
 </body>
 <script>
   // 1、 
@@ -110,6 +111,45 @@
         console.log(1)
     })
     .start()
+
+
+    function test(person) {
+      person.age = 26
+      person = {
+        name: 'hzj',
+        age: 18
+      }
+      return person
+    }
+    const p1 = {
+      name: 'fyq',
+      age: 19
+    }
+    const p2 = test(p1)
+    console.log(p1) // -> ?
+    console.log(p2) // -> ?
+
+    // 6 两数之和
+    /**
+     * @param {number[]} nums
+     * @param {number} target
+     * @return {number[]}
+     */
+    var twoSum = function(nums, target) {
+        for( let i in nums) { 
+            let ret = []
+            let otherNum = target - nums[i]
+            let otherIndex = nums.indexOf(otherNum)
+            if(otherIndex > -1 && otherIndex != i) { // 这里不能用 !== 因为for in 循环下标是String，indexOf 返回的是number类型
+                return [i, otherIndex]
+            }
+        }
+    };
+    console.log(twoSum([3,2,4], 6))
+
+
+
+
 
 </script>
 </html>
