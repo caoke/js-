@@ -12,6 +12,13 @@
         });
       }
       console.log(upOrLowCase(str))
+
+
+    function qufan(str) {
+      str.replace(/[a-zA-Z]/g, (element) => {
+        return element.toLocaleUpperCase() === element ? element.toLocaleLowerCase() : element.toLocaleUpperCase()
+      })
+    }
       
     </script>
 </html>

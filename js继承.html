@@ -48,6 +48,9 @@
     let _password = password
     // public属性
     this.username = username
+    this.getName = function() {
+      console.log(this.username)
+    }
     // public方法
     GithubUser.prototype.login = function () {
         console.log(this.username + '要登录Github，密码是' + _password)
@@ -66,13 +69,15 @@
   console.log(juejinUser1)
   juejinUser1.login()
 
-  // 2、 构造函数式继承 通过call()、apply（） 来实现
+  // 2、 构造函数式继承 通过call()、apply（） 来实现  构造函数式继承并没有继承父类原型上的方法,但是可以继承父类的方法
   function JuejinUser2(username, password) {
       GithubUser.call(this, username, password)
       this.articles = 3 // 文章数量
   }
   let juejinUser2 = new JuejinUser2('构造函数式继承', '2')
   console.log(juejinUser2)
+  juejinUser2.getName()
+  // juejinUser2.login()
   // 构造函数式继承并没有继承父类原型上的方法
   // console.log(juejinUser2.login()) // TypeError: juejinUser1.login is not a function 
 
@@ -113,13 +118,17 @@
   function JuejinUser5(username, password) {
     GithubUser.call(this, username, password) // 继承属性
     this.articles = 3
+    this.say = function() {
+      console.log('hi')
+    }
   }
 
   // 实现原型上的方法
   inherit(JuejinUser5, GithubUser)
   let juejinUser5 = new JuejinUser5('寄生组合式继承', 5)
   console.log(juejinUser5)
-  juejinUser5.login()
+  juejinUser5.login() // 共用方法
+  juejinUser5.say() // 私有方法
 
 
   // 6、es6实现继承

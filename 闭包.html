@@ -9,6 +9,10 @@
             写一个for循环，每个一秒，按顺序输出i的值
         </p>
 
+      <a href="https://segmentfault.com/q/1010000006873055">讲解let如何形成块级作用域</a>
+      <a href="https://segmentfault.com/a/1190000006875662">闭包</a>
+      <a href="https://juejin.im/post/5b081f8d6fb9a07a9b3664b6">闭包解析</a>
+
     </body>
     <script type="text/javascript">
         function outerFn() {
@@ -49,6 +53,12 @@
           setTimeout(fn.bind(null, i), 1000)
         }
 
+        for(var i = 0; i<5; i++) {
+          setTimeout((function() {
+            console.log('IFEF:', i)
+          })(i), i*1000)
+        }
+
 
 
         // 判断下面函数的输出
@@ -73,6 +83,8 @@
         c.fun(2);        // ? 1
         c.fun(3);        // ? 1
 
+
+
         // 原始对象
         var a = 1
         a.a = 2
@@ -91,6 +103,27 @@
         console.log('a', a)
         console.log('b.x', b.x)
         console.log('b', b)
+
+        function makeAdder(x) {
+          return function(y) {
+            return x + y;
+          };
+        }
+
+        var add5 = makeAdder(5);
+        var add10 = makeAdder(10);
+        console.log(add5(2))// 7
+
+        function fn1() {
+          var name = 'iceman';
+          function fn2() {
+            console.log(name);
+          }
+          return fn2;
+        }
+        var name = 'out'
+        var fn3 = fn1();
+        fn3(); // iceman
 
     </script>
 </html>

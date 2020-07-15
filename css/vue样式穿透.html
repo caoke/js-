@@ -1,0 +1,2 @@
+vue引用了element，需要在组件中局部修改element组件的样式，又不想去除scoped属性造成组件之间的样式污染。此时只能通过>>>，穿透scoped。
+也可以使用 /deep/ .el-menu-item.is-active {}

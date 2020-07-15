@@ -23,15 +23,15 @@
 </body>
 <script type="text/javascript">
 	// 返回顺序 是 100 300  5 4 200
-	console.log(100);
-	setTimeout(function () {
-		console.log(200);
-	}, 1000);
-	console.log(300);
-	setTimeout(function(){
-		console.log(4)
-	},0)
-	console.log(5);
+	// console.log(100);
+	// setTimeout(function () {
+	// 	console.log(200);
+	// }, 1000);
+	// console.log(300);
+	// setTimeout(function(){
+	// 	console.log(4)
+	// },0)
+	// console.log(5);
 
 	function f1() {
 		var n = 99;
@@ -41,7 +41,8 @@
 		return f2;
 	}
 	var result = f1();
-	result();
+  // var n = 100
+	result(); // 99 
 
 	var name = 'window';
 	var p = {
@@ -54,7 +55,8 @@
 	};
 	var getName = p.getName();
 	var _name = getName();
-	console.log(_name);  //window
+  console.log(p.getName())
+	console.log(getName, _name);  //window
 
 	function test() {
 		console.log(foo);
@@ -68,7 +70,7 @@
 			return '3';
 		}
 	}
-	test();  //f foo(){return '3'}  undefined 1 function 的优先级高于var 故foo是函数 bar 是 undefined
+	test();  //f foo(){return '3'}  undefined 1    function 的优先级高于var 故foo是函数 bar 是 undefined
 
 	function test2() {
 		console.log(foo);
@@ -88,7 +90,7 @@
 		console.log('aaa');
 	}
 	var b = 'bbb'
-	a(b);
+	a(b);// aaa
 
 
 

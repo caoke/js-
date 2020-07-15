@@ -7,7 +7,18 @@
   <title>扁平化数组</title>
 </head>
 <body>
-  
+  判断是数组的方法：
+    <ul>
+      <li>1、 value instanceof Array  返回true / false</li>
+      <li>2、 Array.isArray(item) 返回true / false</li>
+      <li>3、 Object.prototype.toString.call() === [object Array]  </li>
+      <li>4、 value.constructor === Array </li>
+      <li>
+        5、 已知如下数组：
+        var arr = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10];
+        编写一个程序将数组扁平化去并除其中重复部分数据，最终得到一个升序且不重复的数组
+       </li>
+    </ul>
 </body>
 <script>
   //扁平化数组 方法一
@@ -23,18 +34,18 @@
       return ret;
   }
   console.log(bianping1(arr2)); //[1,2,3,3,4,5]
-  // reduce
+  // reduce + concat
   function bianping2(arr) {
       return arr.reduce((result, item)=> {
-          return result.concat(Array.isArray(item) ? bianping2(item) : item);
+          return result.concat(Object.prototype.toString.call(item) === '[object Array]' ? bianping2(item) : item);
       }, []);
   }
-  console.log(bianping2(arr2));
+  console.log('reduce', bianping2(arr2));
 
-  // ... 扩展运算符 + concat
+  // ... 扩展运算符 + concat ... 将对象或者数组每一项剥离
   function bianping3(arr) {
       // while遍历直到arr中没有数组 some存在符合条件的则为true
-      while(arr.some(item=>Array.isArray(item))) {
+      while(arr.some(item=>item.constructor === Array)) {
           arr = [].concat(...arr);
       }
       return arr;
@@ -51,5 +62,29 @@
 
   // es6 flat
   console.log('es6 flat',arr2.flat(Infinity))
+
+  // 正则
+  function bianping5 (arr) {
+    return arr.join(',').split(',').map(item => {
+        return item.replace(/\[|\]/g, '')
+      })
+  }
+ // 
+ console.log('oin & split & 正则',bianping5(arr2))
+
+  //5、 已知如下数组：
+  // var arr = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10];
+  // 编写一个程序将数组扁平化去并除其中重复部分数据，最终得到一个升序且不重复的数组
+  var originArr = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10]
+  let newArr = Array.from(new Set(originArr.flat(Infinity))).sort((a,b)=> a-b)
+  console.log(newArr)
+
+
+
+
+
+
+
+
 </script>
 </html>

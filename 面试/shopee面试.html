@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>shopee面试</title>
+</head>
+<body>
+  <ul>
+    <li>web安全</li>
+    <li>浏览器回收机制</li>
+    <li>水平垂直剧中</li>
+    <li>v-for key的作用</li>
+    <li>浏览器加载页面都经历了什么</li>
+    <li>一个函数让相同的输入不会触发两次</li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</body>
+<script>
+  function b(num) {
+    console.log(num) 
+    // let num = 20 // Uncaught SyntaxError: Identifier 'num' has already been declared
+  }
+  b(30)
+
+  // 实现add(1)(10) => 11 add(1)(10)(100) => 111
+
+  // 二分查找算法
+
+  // 新型技术
+
+
+  // setTimeout 不会卡死 一直执行宏任务
+  function a() {
+    console.log('a')
+    setTimeout(a, 0)
+  }
+  // a()
+
+  // 这个会卡死
+  // function b() { 
+  //   Promise.resolve().then(b())
+  // }
+
+  // b()
+
+  var obj ={ a: 1}
+  localStorage.setItem(obj, obj)
+  let localStorageObj = localStorage.getItem(obj)
+  console.log(localStorageObj) // '[object object]'
+
+
+  // 判断下面函数的输出
+  function fun(n,o){
+    console.log(o);
+    return {
+      fun: function(m){
+        return fun(m,n);
+      }
+    };
+  }
+
+  var a = fun(0);  // ? undefined
+  a.fun(1);        // ? 0       
+  a.fun(2);        // ? 0
+  a.fun(3);        // ? 0
+
+  var b = fun(0).fun(1).fun(2).fun(3);// undefined 0 1 2
+
+
+  var c = fun(0).fun(1);  // ? undefined 0
+  c.fun(2);        // ? 1
+  c.fun(3);        // ? 1
+
+
+  var foo="hello";
+  (function(){
+      var bar="World";
+      console.log(foo+bar); // hello world 
+  })();
+  // console.log(foo+bar); // shpee面试.html:83 Uncaught ReferenceError: bar is not defined
+
+  let i =1 + {
+    valueOf() { return 9; }
+  };
+  console.log(i) // 10
+
+
+  let j = 0;
+  new Array(10).forEach(() => {j++;});
+  console.log(j) // 0 forEach方法在数组元素为空时会跳过执行回调函数，相当于此选项回调函数并未执行，所以还是输出0
+
+  console.log(typeof Date.now() )
+
+  // (function() {
+  //   var c = d = 5;
+  // })();   
+  // console.log(d); // 5
+  // console.log(c); // 报错
+
+
+  function out(x){
+    var temp = 2;
+    function inside(y){
+      
+      console.log( x + y + (temp--));
+    }
+    inside(5);
+  }
+  out(3); // 10
+
+  var name="World!";
+  (function(){
+    var name;
+    if(typeof name=== 'undefined'){
+      name='Jack';
+      console.log('Goodbye'+name);
+    }else{
+      console.log('hello'+name);
+    }
+  })();
+
+
+  // 获取参数
+  function getUrlParam(sUrl, sKey) {
+    let arr = sUrl.split('?')
+    let pStr = arr.length > 1 ? arr[1] : ''
+    if(!pStr) return {}
+    
+    let pArr = pStr.split('&')
+    if(sKey) {
+      return pArr.map(item =>{
+          const[key,val] = item.split('=')
+          if(key === sKey) {
+              return val
+          }
+      }).filter(item=> item)
+    }else{
+      return pArr.reduce((ret,item)=>{
+          lconst[key,val] = item.split('=')
+          if(ret[key]) {
+            Array.isArray(ret[key]) ? ret[key].push(val) : ret[key] = [ret[key], val]
+          }else{
+            ret[key] = val
+          }
+          return ret
+      },{})
+    }
+  }
+
+function getUrlParam2(sUrl, sKey) {
+  var paramArr = sUrl.split('?')[1].split('#')[0].split('&'); // 取出每个参数的键值对放入数组
+  const obj = {};
+  paramArr.forEach(element => {
+    const [key, value] = element.split('=');  // 取出数组中每一项的键与值
+    if(obj[key] === void 0){   // 表示第一次遍历这个元素，直接添加到对象上面
+      obj[key]=value
+    } else{
+      obj[key]=[].concat(obj[key],value); // 表示不是第一次遍历说明这个键已有，通过数组存起来。
+    }
+  });
+  return sKey===void 0? obj:obj[sKey]||''   // 如果该方法为一个参数，则返回对象。
+  //如果为两个参数，sKey存在，则返回值或数组，否则返回空字符。
+}
+  console.log(getUrlParam2('http://www.nowcoder.com?key=1&key=2&key=3&test=4#hehe'))
+
+  
+
+  function remove(arr, item) {
+    return arr.reduce((ret, val)=>{
+        return val !== item ? ret.concat(val) : ret
+    }, [])
+    
+  }
+  console.log(remove([1,2,2,4,6,2], 2))
+
+  function removeWithoutCopy(arr, item) {
+    for(let i=0; i< arr.length; i++){
+        if(arr[i] === item){
+            arr.splice(i,1)
+            i= i-1
+        }
+    }
+  }
+  let removeWithoutCopyArr = [2, 2, 2, 3, 4, 2, 2]
+  removeWithoutCopy(removeWithoutCopyArr, 2)
+
+  console.log(removeWithoutCopyArr)
+
+  let arr = [1,2,3]
+  let ret = arr.map(val => val)
+  ret.splice(2,1)
+  console.log(ret, arr)
+
+
+//一个函数让相同的输入不会触发两次
+function cached(fn) {
+  let map = new Map();
+
+  return function() {
+    let n = Array.prototype.slice.call(arguments, 0)[0];
+
+    if (!map.has(n)) {
+      let res = fn(n);
+      map.set(n, res);
+      return res;
+    }
+    return map.get(n);
+  }
+}
+
+
+function sum (n) {
+    console.log(`compute sum of 1-${n}`)
+    let sum = 0
+    for (let i = 1; i < n; i++) {
+        sum += i
+    }
+    return sum
+}
+
+const cachedSum = cached(sum)
+cachedSum(5) // compute sum of 1-5
+cachedSum(5) // 不会再次执行 sum 方法
+cachedSum(6) // compute sum of 1-6
+
+
+function my_print(n)
+{
+    for (var i = 0; i < n; i++) {
+        console.log("-\n");
+        my_print(n - 1);
+    }
+}
+
+my_print(3);
+
+// f(n) = n * (1 + f(n-1)) = O(n!)
+// f(0) = 0
+// f(1) = 1
+// f(2) = 4
+// f(3) = 15
+
+
+// my_print(n);
+</script>
+</html>

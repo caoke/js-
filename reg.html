@@ -29,12 +29,13 @@
         function commafy(num){
             return num && num
                 .toString()
-                .replace(/(\d)(?=(\d{3})+\.)/g, function($0,$1){
+                .replace(/(\d)(?=(\d{3})+(\.|$))/g, function($0,$1){
                     //$1
                     return $1 + ',';
                 });
         }
         console.log(commafy(1234567.002));
+        console.log(commafy(1234567));
         //replace的用法
         var name = "Doe, John";
         console.log(name.replace(/(\w+)\s*, \s*(\w+)/, '$2 $1'));

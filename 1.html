@@ -5,64 +5,7 @@
 </head>
 <body>
 <script type="text/javascript">
-	// function foo() {
-	// 	console.log(this);  // {}
-	// 	setTimeout(() => {  //箭头函数 固定this指向
-	// 	   console.log('id:', this.id);
-	// 	}, 100);
-	// }
-
-	//var id = 21;
-
-	// foo.call({ id: 42 }); // id: 42
-
-	function foo1 () {
-		
-		console.log(this); // 这里指向的是{id： 43}
-		var id = 10;
-		setTimeout(function(){
-			console.log(this); // 这里指向的是window
-			console.log(this.id);
-		},100)
-	}
-	foo1.call({id:43});
-
-
-
-var adder = {
-  base : 1,
-    
-  add : function(a) {
-    var f = v => v + this.base;
-    return f(a);
-  },
-
-  addThruCall: function(a) {
-    var f = v => v + this.base;
-    var b = {
-      base : 2
-    };
-            
-    return f.call(b, a);
-  },
-
-  addThruCall2: function(a) {
-    function f(v){
-    	return v += this.base; 
-    }
-    var b = {
-      base : 2
-    };
-            
-    return f.call(b, a);
-  }
-
-};
-
-console.log(adder.add(1));         // 输出 2
-console.log(adder.addThruCall(1)); // 仍然输出 2（而不是3 ——译者注）
-console.log(adder.addThruCall2(1)); // 输出 3
-
+	
 
 // 标准的闭包函数
 // function A(){
@@ -91,15 +34,6 @@ console.log(adder.addThruCall2(1)); // 输出 3
 // var Add = (i=0)=> ()=> (++i);
 
 
-var obj = {
-    birth: 1990,
-    getAge: function () {
-        var b = this.birth; // 1990
-        var fn = function() {new Date().getFullYear() - this.birth; }// this指向obj对象
-        return fn();
-    }
-};
-console.log(obj.getAge()); 
 
 
 const a = {};
@@ -107,11 +41,14 @@ const b = { key : "b"};
 const c = { key : "c" };
 a[b] = 123;
 a[c] = 456;
-console.log(a[b]);
+
+console.log(a, a[b]); 
+
+// {[object Object]: 456}, 456 因为b和c都是一个对象，当一个对象作为key存储在对象中 会变成【object object】
 
 const numbers = [1,2,3];
 numbers[10] = 11; 
-console.log(numbers);
+console.log(numbers); // [1,2,3, empty *7 ,11]
 
 
 </script>

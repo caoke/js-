@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>阮一峰flex布局实例</title>
+  <style>
+    .Grid {
+      display: flex;
+    }
+    .Grid-cell{
+      background: rgb(228, 227, 227);
+      margin: 10px;
+    }
+    /* 平均分布 */
+    .averge { 
+      flex: 1;
+    }
+
+    .Grid-cell.u-full {
+      flex: 0 0 100%;
+    }
+
+    .Grid-cell.u-1of2 {
+      flex: 0 0 50%;
+    }
+
+    .Grid-cell.u-1of3 {
+      flex: 0 0 33.3333%;
+    }
+
+    .Grid-cell.u-1of4 {
+      flex: 0 0 25%;
+    }
+
+
+    .HolyGrail {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      border: 1px solid #333333;
+    }
+
+    header,
+    footer {
+      flex: 1;
+    }
+
+    .HolyGrail-body {
+      display: flex;
+      flex: 1;
+      background: cornsilk;
+    }
+
+    .HolyGrail-content {
+      flex: 1;
+    }
+
+    .HolyGrail-nav, .HolyGrail-ads {
+      /* 两个边栏的宽度设为12em */
+      flex: 0 0 12em;
+    }
+
+    .HolyGrail-nav {
+      /* 导航放到最左边 */
+      order: -1;
+    }
+
+
+    .parent {
+      width: 200px;
+      height: 150px;
+      background-color: black;
+      display: flex;
+      flex-flow: row wrap;
+      align-content: flex-start;
+    }
+
+    .child {
+      box-sizing: border-box;
+      background-color: white;
+      flex: 0 0 25%;
+      height: 50px;
+      border: 1px solid red;
+    }
+
+  </style>
+</head>
+<body>
+  平均布局
+  <div class="Grid">
+    <div class="Grid-cell averge">1</div>
+    <div class="Grid-cell averge">2</div>
+    <div class="Grid-cell averge">3</div>
+  </div>
+
+  百分比布局
+  <div class="Grid">
+    <div class="Grid-cell u-1of4">...</div>
+    <div class="Grid-cell">...</div>
+    <div class="Grid-cell u-1of3">...</div>
+  </div>
+
+  圣杯布局： （Holy Grail Layout）指的是一种最常见的网站布局。页面从上到下，分成三个部分：头部（header），躯干（body），尾部（footer）。其中躯干又水平分成三栏，从左到右为：导航、主栏、副栏。
+
+  <div class="HolyGrail">
+    <header>header</header>
+    <div class="HolyGrail-body">
+      <main class="HolyGrail-content"> main </main>
+      <nav class="HolyGrail-nav"> nav </nav>
+      <aside class="HolyGrail-ads"> aside</aside>
+    </div>
+    <footer>footer</footer>
+  </div>
+
+  流式布局 一行固定几个 多了就换行
+  <div class="parent">
+    <div class="child"></div>
+    <div class="child"></div>
+    <div class="child"></div>
+    <div class="child"></div>
+    <div class="child"></div>
+  </div>
+
+</body>
+</html>

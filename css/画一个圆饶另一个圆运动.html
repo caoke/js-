@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>运动的圆</title>
+  <style>
+    .s {
+        width: 500px;
+        height: 500px;
+        border: 1px solid #ccc;
+        position: relative;
+        left: 50px;
+        top: 50px;
+        overflow: hidden;
+        margin-bottom: 100px;
+    }
+    
+    .small-p{
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background: #ff0000;
+        position: absolute;
+        
+    }
+    .small-p1 {
+        background: #dde3a2;
+        top: -5px;
+        left: 150px;
+    }
+    .small {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        border-radius: 150px;
+        left: 100px;
+        top: 50px;
+        animation: run 6s linear infinite;
+        border: 1px solid #dde3a2;
+    }
+    .m {
+        position: absolute;
+    }
+    @keyframes run{
+        0%{
+            transform: rotateZ(0deg);
+        }
+        100%{
+            transform: rotateZ(360deg);
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="s">
+    <div class="m">
+        <div class="small small1">
+            <div class="small-p small-p1"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

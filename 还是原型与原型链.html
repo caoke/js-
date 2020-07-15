@@ -7,13 +7,13 @@
 	<div>
 		<p>原型和原型链-5个原型规则</p>
 		<div style="display: inline-block;">
-		 <p> 1、所有的引用类型（对象/数组/函数），都具有对象的属性，即可自由拓展属性（null除外） </p>
-      <p>  2、所有的引用类型（对象/数组/函数），都有一个__proto__(隐形原型)属性，这个隐形原型其实就是一个普通的对象 </p>
+		  <p> 1、所有的引用类型（对象/数组/函数），都具有对象的属性，即可自由拓展属性（null除外） </p>
+      <p> 2、所有的引用类型（对象/数组/函数），都有一个__proto__(隐形原型)属性，这个隐形原型其实就是一个普通的对象 </p>
       <p> 3、所有的函数都有一个prototype（显示原型）属性，也是一个普通对象 </p>
-			<p>4、所有的引用类型（对象/数组/函数）的_proto_都指向它的构造函数的prototype属性 也就是 <span style="color: red;">实例.__proto__ === 构造函数.prototype</span></p>
-      <p>5、当查找一个对象的某个属性，如果对象没有这个属性，就去__proto__(也就是他的构造函数的prototype属性)中寻找</p>
-     <p> 6、构造函数.prototype 又称为 “实例原型”</p>
-      <p>7、每个原型都有一个 constructor 属性指向关联的构造函数</p>
+			<p> 4、所有的引用类型（对象/数组/函数）的_proto_都指向它的构造函数的prototype属性 也就是 <span style="color: red;">实例.__proto__ === 构造函数.prototype</span></p>
+      <p> 5、当查找一个对象的某个属性，如果对象没有这个属性，就去__proto__(也就是他的构造函数的prototype属性)中寻找</p>
+      <p> 6、构造函数.prototype 又称为 “实例原型”</p>
+      <p> 7、每个原型都有一个 constructor 属性指向关联的构造函数</p>
 		</div>
 
 	</div>
@@ -27,7 +27,7 @@
 		console.log(obj.__proto__);
 		console.log(f.__proto__);
 
-		console.log(arr.prototype); //undefined
+		console.log(arr.prototype); //undefined 函数才会有prototype
 
 		console.log(f.prototype);  // object
 
@@ -40,7 +40,7 @@
 		}
 
 		Foo.prototype.alertName = function(){
-			alert(this.name);
+			// alert(this.name);
 		}
 
 		//实例化一个对象 new的整个过程是 this先指向一个包含构造函数属性的对象 将对应的参数赋值给对象的属性，最后构造函数返回this指向的对象 然后赋值给f1
@@ -56,7 +56,7 @@
 		f1.printName();
 		f.toString();  //要去f.__proto__ 也就是Foo.prototype中去找这个属性，但这里并没有 所以去f.__proto__.__proto__ 也就是Object.prototype中去找
 
-
+    // 手写new
 		function new2(func){
 			let o = Object.create(func.prototype);
 			let k = func.call(o);

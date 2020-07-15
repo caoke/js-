@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中信银行面试</title>
+  <style>
+      .parent{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 300px;
+        border: 1px solid #333;
+      }
+      .left{
+        width: 200px;
+        background: red;
+        flex-grow: 1;
+      }
+      .right{
+        flex: 1;
+        flex-grow: 3;
+        text-align: center;
+        background: blue;
+      }
+
+  </style>
+</head>
+<body>
+  josnp的缺点
+  http与https的区别
+  BFC块级执行上下文
+  new 的原理
+  instanceof原理  就是 A instanceof B 就是沿着A的__proto__这条线来找，同时沿着B的prototype这条线来找，如果两条 线能找到同一个引用，即同一个对象，那么就返回true。如果找到终点还未重合，则返回false
+  __ptoto__ prototype constructor 
+
+
+  spa 首屏加载 优化
+
+  window.onload 和 document.on什么的 哪个先执行
+  http缓存
+
+  
+
+ <p>使用Flex布局实现300px高的容器内两个元素垂直居中布局，水平一左一右，左侧固定宽度200px，右侧铺满剩余宽度，右侧内容水平居中</p> 
+  <div class="parent">
+    <div class="left">
+      left
+    </div>
+    <div class="right">
+      right
+    </div>
+  </div>
+
+  有数千名客户的数据格式如：const customers = [{name: 'Jack', age: 18}, {name: 'Mick', age: 28}, ...]，手写方法求解其平均年龄，不可使用for循环
+
+
+</body>
+
+<script>
+  // 获取对象中平均年龄
+  function getAvAge(data) {
+    let ret = ''
+    let sum = 0
+    data.forEach(item => {
+      sum += item.age
+    })
+    ret = sum / data.length
+    return ret
+  }
+
+  customers.reduce((sum,item) => {
+    return item.age + sum
+  }, 0)
+
+
+  // 快排
+  function quickSort(arr) {
+    if(arr.length === 1) {
+      return arr
+    }
+    let left = []
+    let right = []
+    let midIndex = Math.floor(arr.length / 2)
+    let midValue = arr.splice(midIndex, 1)[0]
+
+    for(let i = 0; i<arr.length; i++) {
+      if(arr[i] <= midValue) {
+        left.push(arr[i])
+      }else {
+        right.push(arr[i])
+      }
+    }
+
+    return quickSort(left).concat(quickSort(right))
+  }
+
+  
+
+</script>
+</html>

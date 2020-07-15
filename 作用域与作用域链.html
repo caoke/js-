@@ -143,5 +143,31 @@
 	_isFirstLoad2(10)   // true
 	_isFirstLoad2(10); //true 
 
+
+var obj1 = {
+  birth: 1990,
+  getAge: function () {
+      var b = this.birth; // 1990
+      var fn = function() {new Date().getFullYear() - this.birth; }// this指向obj对象
+      return fn();
+  }
+};
+console.log(obj1.getAge()); // undefined 函数没有返回值时，默认返回 undefined 
+
+
+var obj2 = {
+    birth: 1990,
+    getAge: function () {
+        var b = this.birth; // 1990
+        var fn = () => new Date().getFullYear() - this.birth; // this指向obj对象
+        return fn();
+    }
+};
+var birth = 1992
+var getAge = obj2.getAge
+console.log(obj2.getAge()); // 30
+console.log(getAge())
+
+
 </script>
 </html>

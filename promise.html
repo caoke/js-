@@ -200,5 +200,12 @@ let my = new MyPromise((resole, reject) =>{
 my.then(res => {
   console.log(res)
 })
+
+let time5 = new Promise((resolve, reject) => {
+  setTimeout(() => {resolve()}, 5000)
+})
+time5.then(() => {
+  console.log('5s钟了')
+})
 </script>
 </html>

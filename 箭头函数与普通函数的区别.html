@@ -3,16 +3,78 @@
     <title>es6用法</title>
     <body>
       <ul>
-        <li>箭头函数语法上更简洁 ,箭头函数代码只有一行的时候，默认返回</li>
-        <li>箭头函数中没有this，this指向依赖所属上下文，使用call/apply/bind都无法改变指向</li>
-        <li>箭头函数没有arguments,只能基于...args</li>
-        <li>箭头函数不能创建构造函数，不能被new执行，没有prototype</li>
+        <li>1、箭头函数语法上更简洁 ,箭头函数代码只有一行的时候，默认返回</li>
+        <li>2、箭头函数中没有this，this指向依赖所属上下文，使用call/apply/bind都无法改变指向</li>
+        <li>3、箭头函数没有arguments,只能基于...args</li>
+        <li>4、箭头函数不能创建构造函数，不能被new执行，没有prototype</li>
       </ul>
     </body>
     <script type="text/javascript">
+    // 2、箭头函数中没有this，this指向依赖所属上下文，使用call/apply/bind都无法改变指向
+      var adder = {
+        base : 1,
+          
+        add : function(a) {
+          var f = v => v + this.base;
+          return f(a);
+        },
+
+        addThruCall: function(a) {
+          var f = v => v + this.base; // 因为箭头函数没有 this，所以也不能用 call()、apply()、bind() 这些方法改变 this 的指向
+          var b = {
+            base : 2
+          };
+          return f.call(b, a);
+        },
+
+        addThruCall2: function(a) {
+          function f(v){
+            return v + this.base; 
+          }
+          var b = {
+            base : 2
+          };
+                  
+          return f.call(b, a);
+        }
+
+      };
+
+      console.log(adder.add(1));         // 输出 2
+      console.log(adder.addThruCall(1)); // 仍然输出 2（而不是3 ——译者注）
+      console.log(adder.addThruCall2(1)); // 输出 3
+
+    // 2、箭头函数中没有this，this指向依赖所属上下文
+      function foo() {
+        console.log(this);  // {}
+        setTimeout(() => {  //箭头函数 查找上一级的this
+          console.log('id:', this.id);
+        }, 100);
+      }
+      foo.call({ id: 42 }); // id: 42
+
+
+      // var id = 21;
+      function foo1 () {
+        
+        console.log(this); // 这里指向的是{id： 43}
+        var id = 10;
+        setTimeout(function(){ // 这里的this指向window 因为这里是匿名函数 匿名函数作用域是全局
+          console.log('id:', this.id);
+        },100)
+      }
+
+      foo1.call({id:43}); // id: undefined
+
+
+    // 3、箭头函数没有arguments,只能基于...args
       let fn = (...arg) => {
         console.log(arg)
       }
       fn(10,20,30)
+      
+    
+
+      
     </script>
 </html>

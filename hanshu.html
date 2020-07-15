@@ -9,6 +9,9 @@
       <p>因为 JavaScript 采用的是词法作用域，<span style="color: red;">函数的作用域在函数定义的时候就决定了。</span></p>
       <p>为了实现词法作用域，JavaScript函数对象的内部状态不仅必须包括函数的代码，还必须包括对当前作用域链的引用。</p>
       <p>函数对象和范围（一组变量绑定）之间的这种组合（在其中解析函数的变量）在计算机科学文献中称为闭包。</p>
+  
+      <a href="https://www.cnblogs.com/xwant/p/7752658.html">JavaScript 中，new 的构造函数后面加括号与不加括号的区别</a>
+
     </body>
     <script type="text/javascript">
       function Byte () {
@@ -36,12 +39,11 @@
       getName();// 上一步设置getName = function() {console.log('1')} 1
       new Byte.getName();// new运算符 优先级 低于 . 类的静态方法  2
       var b = new Byte()
-      console.log(b)
+      // console.log(b)
       b.getName() // 3
       new Byte().getName();// 3 这里想不通
-      new new Byte().getName();
-      new getName()
-
+      new new Byte().getName(); //  3
+      new getName() 
 
       // function Byte () {
       //   getName = function () {
@@ -58,6 +60,9 @@
       // }; 
       // var car = new Byte(); 
       // car.getName()
+
+
+      
 
     </script>
 </html>

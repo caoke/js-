@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在页面中插入元素</title>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+// 普通插入 使用for循环appendChild
+let ul = document.createElement('ul')
+ul.addEventListener('click',function (e) {
+  console.log(e.target.innerHTML);
+});
+let arr= Array.apply(null, { length: 10 }).map((item,index)=>{
+    let li = document.createElement('li')
+    li.innerHTML = index
+    ul.appendChild(li)
+    return li;
+});
+console.log(arr); //(10) [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+document.body.appendChild(ul);
+
+
+// 使用createDocumentFragment 创建片段 一次插入dom 性能更高
+var root = document.getElementById('root')
+var fragment = document.createDocumentFragment()
+for(let i = 0; i < 1000; i++){
+	let li = document.createElement('li')
+	li.innerHTML = '我是li标签'
+    fragment.appendChild(li)
+}
+root.appendChild(fragment);
+
+
+
+</script>
+</html>

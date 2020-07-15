@@ -25,6 +25,18 @@
   console.log([] instanceof Array)
   console.log({} instanceof Object);//true
 
+
+
+ console.log(typeof ''  == 'string') // boolean number string undefined object包含这三种类型(object,array, null)
+ console.log( typeof null)
+ 
+  var a = ''
+  console.log(a instanceof String) // false 因为a 是基本数据类型 没有 __proto__ 
+                                    // instanceof 的原理就是 是否能从实例的__proto__ 找到构造函数的prototype
+ console.log(a.constructor )  // String Number Boolean Array Object  
+                              // 注意：null undefined 是没有constructor的 如果调用 会报错Cannot read property 'constructor' of undefined
+
+
  
   
 </script>

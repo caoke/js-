@@ -164,6 +164,28 @@ obj.myFun.call({name: 'xiaoli', age:18}, ['上海', '北京']) // xiaoli年龄18
 obj.myFun.bind({name: 'xiaoli', age:18}, ['上海', '北京'])() // xiaoli年龄18 来自上海,北京去往undefined
 // obj.myFun.apply({name: 'xiaoli', age:18}, '上海', '北京') // 报错
 
+
+var num = 1;
+var myObject = {
+    num: 2,
+    add: function() {
+        this.num = 3;
+        (function() {
+            console.log(this.num); // 立即执行函数指向window 
+            this.num = 4;
+        })();
+        console.log(this.num);
+    },
+    sub: function() {
+        console.log(this.num)
+    }
+}
+myObject.add(); // 1 3
+console.log(myObject.num); // 3
+console.log(num); // 4
+var sub = myObject.sub; // 隐式绑定 this丢失
+sub(); // 4
+
 </script>
 </body>
 </html>

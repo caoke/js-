@@ -14,6 +14,8 @@
   <p>5、实现一个任务队列，只有在执行了start之后 任务才一个个执行</p>
   <p>6、两数之和</p>
   <p>7、查过js数据范围的两个大数相加</p>
+  <p>8、数组结构转树形结构</p>
+  <p>9、n阶台阶，每次可上一阶也可上两阶，有多少种可能性</p>
 </body>
 <script>
   // 1、 
@@ -104,7 +106,7 @@
     .task(1000, () => {
         console.log(1)
     })
-    .task(2000, () => {
+    .task(3000, () => {
         console.log(2)
     })
     .task(1000, () => {
@@ -146,6 +148,69 @@
         }
     };
     console.log(twoSum([3,2,4], 6))
+
+    // 7 超出范围的连个大数相加
+    function add (a, b) {
+      let lenA = a.length,
+          lenB = b.length,
+          len = lenA > lenB ? lenA : lenB;
+
+      // 先补齐位数一致
+      if(lenA > lenB) {
+          for(let i = 0; i < lenA - lenB; i++) {
+              b = '0' + b;
+          }
+      } else {
+          for(let i = 0; i < lenB - lenA; i++) {
+              a = '0' + a;
+          }
+      }
+
+      let arrA = a.split('').reverse(),
+          arrB = b.split('').reverse(),
+          arr = [],
+          carryAdd = 0;
+
+      for(let i = 0; i < len; i++) {
+          let temp = Number(arrA[i]) + Number(arrB[i]) + carryAdd;
+          arr[i] = temp > 9 ? temp - 10 : temp;
+          carryAdd = temp >= 10 ? 1 : 0;
+      }
+
+      if(carryAdd === 1) {
+          arr[len] = 1;
+      }
+
+      return arr.reverse().join('');
+  }
+
+
+
+    // 8 var arr=[{id: 0,name: 0},{parentId: 0, id: 1,name: 1},{parentId: 1,id:2,name:2},{parentId: 1,id:3,name: 3}]
+
+
+    // 9
+  
+
+    // 10  输出[0,3,2,1]
+    let arr10 = [1,8,4,3] 
+    function getLittleNumberLength(arr){
+      let ret = []
+      let newArr = [...arr] 
+      newArr.sort((a,b) => a-b)
+      for( let i in arr){
+        ret[i] = newArr.indexOf(arr[i])
+      }
+      return ret
+    }
+    console.log(getLittleNumberLength(arr10))
+
+
+    var str = '111'
+    str.name = '222'
+    console.log(str.name) // undefined
+
+    
 
 
 
